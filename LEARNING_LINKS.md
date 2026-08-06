@@ -2,7 +2,7 @@
 
 Curated **best starting links** for each topic in this repo’s learning path. Prefer official docs + one strong tutorial; use videos when you learn better by watching.
 
-Suggested order: **install → IDE → venv → pip/poetry → types → strings → I/O**.
+Suggested order: **install → IDE → venv → pip/poetry → types → strings → I/O → deep concepts**.
 
 ---
 
@@ -166,6 +166,116 @@ with open("notes.txt", encoding="utf-8") as f:
 
 ---
 
+## Deep Concepts
+
+After the fundamentals above, dig into how Python really works and how to write idiomatic code.
+
+### 8. Memory management and garbage collection
+
+| Type | Resource | Why it’s good |
+|------|----------|---------------|
+| Guide | [Memory Management in Python — Real Python](https://realpython.com/python-memory-management/) | Best deep dive: reference counting, cycles, arenas |
+| Docs | [`gc` module](https://docs.python.org/3/library/gc.html) | Control / inspect the cyclic garbage collector |
+| Docs | [Memory management (C API)](https://docs.python.org/3/c-api/memory.html) | How CPython allocates object memory |
+| Glossary | [garbage collection — Real Python](https://realpython.com/ref/glossary/garbage-collection/) | Short mental model + cycle example |
+| Internal | [CPython GC internals](https://github.com/python/cpython/blob/main/InternalDocs/garbage_collector.md) | How the cycle detector works under the hood |
+
+**Key ideas**
+- CPython primarily uses **reference counting** (free when refcount hits 0).
+- A **cyclic GC** cleans up reference cycles that refcounting alone cannot.
+- Objects live on the **heap**; names/variables hold references.
+
+```python
+import gc
+import sys
+
+x = []
+print(sys.getrefcount(x))  # how many references exist
+gc.collect()               # run a collection manually
+```
+
+---
+
+### 9. Dynamic typing vs static typing
+
+| Type | Resource | Why it’s good |
+|------|----------|---------------|
+| Guide | [Python Type Checking — Real Python](https://realpython.com/python-type-checking/) | Dynamic vs static, gradual typing, mypy |
+| Docs | [Type system concepts](https://typing.python.org/en/latest/spec/concepts.html) | Official: runtime types, gradual typing, `Any` |
+| Docs | [`typing` module](https://docs.python.org/3/library/typing.html) | Type-hint vocabulary |
+| Docs | [mypy: dynamic vs static typing](https://mypy.readthedocs.io/en/stable/getting_started.html#dynamic-vs-static-typing) | Practical static checking workflow |
+| Spec | [PEP 484 — Type Hints](https://peps.python.org/pep-0484/) | Why optional static checking was added |
+
+**Key ideas**
+- Python is **dynamically typed**: types are checked at runtime; a name can point to different types over time.
+- **Type hints** do not change runtime behavior; tools like **mypy** / **Pyright** do static checks.
+- Prefer **gradual typing**: add hints where they help, leave the rest dynamic.
+
+```python
+# Dynamic: type can change
+value = 42
+value = "forty-two"
+
+# Optional static hints (checked by mypy, not by Python at runtime)
+def double(n: int) -> int:
+    return n * 2
+```
+
+---
+
+### 10. The `__name__` variable and execution context
+
+| Type | Resource | Why it’s good |
+|------|----------|---------------|
+| Guide | [What Does `if __name__ == "__main__"` Do? — Real Python](https://realpython.com/if-name-main-python/) | Clearest explanation of the idiom |
+| Guide | [Defining Main Functions in Python — Real Python](https://realpython.com/python-main-function/) | Structure scripts with `main()` + guard |
+| Docs | [`__main__` — top-level code environment](https://docs.python.org/3/library/__main__.html) | Official module docs |
+| Docs | [Modules tutorial](https://docs.python.org/3/tutorial/modules.html) | How `__name__` works when importing |
+| Video | [`if __name__ == '__main__'` — Corey Schafer](https://www.youtube.com/watch?v=sugvnHA7ElY) | Clear walkthrough of script vs import |
+
+**Key ideas**
+- When you **run** a file, `__name__` is `"__main__"`.
+- When you **import** it, `__name__` is the module name (e.g. `"mymodule"`).
+- Put runnable/demo code under `if __name__ == "__main__":` so imports stay side-effect free.
+
+```python
+def greet(name: str) -> str:
+    return f"Hello, {name}"
+
+def main() -> None:
+    print(greet("Ada"))
+
+if __name__ == "__main__":
+    main()
+```
+
+---
+
+### 11. PEP 8 and code style guidelines
+
+| Type | Resource | Why it’s good |
+|------|----------|---------------|
+| Spec | [PEP 8 — Style Guide for Python Code](https://peps.python.org/pep-0008/) | The official style guide — start here |
+| Guide | [Beautiful Python With PEP 8 — Real Python](https://realpython.com/python-pep8/) | Friendly walkthrough of the important rules |
+| Tool | [Ruff](https://docs.astral.sh/ruff/) | Fast linter/formatter that enforces PEP 8-style rules |
+| Tool | [pycodestyle](https://pycodestyle.pycqa.org/en/latest/) | Classic PEP 8 checker |
+| Docs | [Black code style](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html) | Opinionated autoformatter (PEP 8–aligned) |
+| Video | [Ruff linter & formatter — Corey Schafer](https://www.youtube.com/watch?v=828S-DMQog8) | Modern way to enforce PEP 8–style rules automatically |
+
+**Key ideas (cheat sheet)**
+- Indent with **4 spaces**; keep lines ~**79–88** characters when practical.
+- Names: `snake_case` functions/vars, `CapWords` classes, `UPPER_CASE` constants.
+- Imports at the top; one statement per line; spaces around operators.
+- Use a formatter (`ruff format` / `black`) so style is automatic.
+
+```bash
+pip install ruff
+ruff check .
+ruff format .
+```
+
+---
+
 ## Full courses / playlists (optional binge)
 
 Use these if you want one continuous path instead of topic-by-topic links.
@@ -182,7 +292,7 @@ Use these if you want one continuous path instead of topic-by-topic links.
 
 ## How to use this list
 
-1. Work **one topic at a time** in the order above.
+1. Work **one topic at a time** in the order above (fundamentals first, then deep concepts).
 2. Read the **Docs** row first, then one **Guide**, then a **Video** if stuck.
 3. After each topic, write a tiny script that uses what you learned.
 4. Prefer practicing inside a **venv** once you’ve finished topic 2.
