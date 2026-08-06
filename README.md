@@ -1,2 +1,21 @@
 # learnpython
-this repo is to learn python from scratch
+
+Learn Python from scratch — environment setup through core language basics.
+
+## Learning path
+
+| # | Topic | Status | Best links |
+|---|--------|--------|------------|
+| 1 | Python installation (Python 3.11+) | [ ] | [Links](LEARNING_LINKS.md#1-python-installation-python-311) |
+| 2 | Virtual environments (venv, conda) | [ ] | [Links](LEARNING_LINKS.md#2-virtual-environments-venv-conda) |
+| 3 | Package management (pip, poetry) | [ ] | [Links](LEARNING_LINKS.md#3-package-management-pip-poetry) |
+| 4 | IDEs setup (VS Code, PyCharm) | [ ] | [Links](LEARNING_LINKS.md#4-ides-setup-vs-code-pycharm) |
+| 5 | Variables, data types, type hints | [ ] | [Links](LEARNING_LINKS.md#5-variables-data-types-type-hints) |
+| 6 | String manipulation and f-strings | [ ] | [Links](LEARNING_LINKS.md#6-string-manipulation-and-f-strings) |
+| 7 | Input/output operations | [ ] | [Links](LEARNING_LINKS.md#7-inputoutput-operations) |
+
+## Start here
+
+Open **[LEARNING_LINKS.md](LEARNING_LINKS.md)** for the best docs, tutorials, and videos for every topic above.
+
+Suggested order: install → IDE → venv → pip/poetry → types → strings → I/O.
