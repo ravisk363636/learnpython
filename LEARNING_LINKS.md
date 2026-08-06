@@ -147,7 +147,7 @@ print(name.upper(), name[0:2], name.replace("A", "a"))
 | Docs | [Input and Output — official tutorial](https://docs.python.org/3/tutorial/inputoutput.html) | `print`, formatting, reading/writing files |
 | Docs | [`input()`](https://docs.python.org/3/library/functions.html#input) · [`print()`](https://docs.python.org/3/library/functions.html#print) | Built-in function references |
 | Guide | [Reading and Writing Files — Real Python](https://realpython.com/read-write-files-python/) | `open`, `with`, text vs binary |
-| Guide | [Basic Input, Output, and String Formatting — Real Python](https://realpython.com/python-basic-input-output-and-string-formatting/) | Console I/O + formatting |
+| Guide | [Basic Input and Output — Real Python](https://realpython.com/python-input-output/) | Console `input()` / `print()` |
 | Video | [Printing, input, and variables](https://www.youtube.com/watch?v=WnCBW_Im2UU) | `print`, `input`, casting with `int()` |
 
 **Mini example**
