@@ -6,7 +6,7 @@ Copy and paste the prompt below into your AI coding assistant, product brief, or
 
 ## System / Role
 
-You are a senior full-stack engineer and product architect specializing in modern, secure sports-management platforms. Design and implement a production-ready **Badminton Sports Management App** using a **Java-first stack** (Python backend acceptable as an alternate), strong security practices, and a modular architecture so features can be enabled, disabled, or customized on demand.
+You are a senior full-stack engineer and product architect specializing in modern, secure sports-management platforms. Design and implement a production-ready **Badminton Sports Management App** using a **Groovy + Grails-first stack** (plain Java/Spring Boot or Python acceptable only as documented alternates), strong security practices, and a modular architecture so features can be enabled, disabled, or customized on demand.
 
 **Do not use JavaScript/TypeScript frameworks** for backend, web admin, or mobile (no Node, React, Next.js, React Native, etc.).
 
@@ -23,7 +23,7 @@ Build a mobile-first (with optional web admin) badminton club/academy platform t
 3. **Players** — profiles, skill level, membership, assigned coach, booking history  
 4. **Attendance** — session check-in/out, court usage attendance, training attendance  
 5. **Login / logout timings** — accurate session and facility access timestamps  
-6. **Biometric authentication (on demand)** — fingerprint / Face ID / WebAuthn where the device and policy allow it  
+6. **Biometric authentication (on demand)** — fingerprint / Face ID via platform APIs where the device and policy allow it  
 7. **Feature flags & customization** — every major capability must be toggleable and configurable per club/tenant without redeploying core logic when possible  
 
 ---
@@ -97,67 +97,75 @@ Authorization must be enforced on **every API endpoint and UI route**, not only 
 
 ---
 
-## Technology Preferences (Java-first; no JavaScript stack)
+## Technology Preferences (Groovy + Grails-first; no JavaScript stack)
 
 **Do not use a JavaScript/TypeScript stack** (no Node.js, NestJS, Next.js, React, React Native, Expo, Vue, Angular, etc.) unless the user explicitly overrides this constraint later.
 
-Prefer a modern, maintainable **Java** stack. **Python** is an acceptable alternate backend if Java is impractical for a given module. Justify choices briefly.
+Prefer a modern, maintainable **Groovy + Grails** stack on the JVM. Plain **Java/Spring Boot** or **Python** are acceptable only as documented alternates if Grails is impractical for a specific constraint. Justify choices briefly.
 
 ### Preferred stack (default)
 
-#### Backend (primary)
-- **Java 21 (LTS) + Spring Boot 3.x**
-- **Spring Security** for authentication/authorization (JWT and/or session-based)
-- **Spring Data JPA** + **Hibernate**
-- **Flyway** or **Liquibase** for DB migrations
+#### Backend (primary) — Groovy + Grails
+- **Grails 6.x** (or latest stable) on **JDK 17+ / 21 LTS**
+- **Groovy** for domain classes, services, controllers, jobs, and configuration (idiomatic Grails)
+- **GORM** (Hibernate) for persistence; domain-driven models with constraints/validation
+- Database migrations via **Grails Database Migration Plugin** (Liquibase) or equivalent
+- **Spring Security (Grails Spring Security Core / REST)** for authentication and RBAC
+  - Session-based auth for server-rendered admin
+  - JWT / token auth for the mobile API (Spring Security REST or equivalent)
 - **PostgreSQL** as primary database
 - **Redis** (optional) for sessions, rate limiting, and feature-flag cache
-- **springdoc-openapi** for OpenAPI/Swagger docs
-- Bean Validation (`jakarta.validation`), structured logging, actuator health endpoints
-- Modular packages or Spring Boot modules per domain (auth, booking, attendance, config)
+- REST API via Grails controllers / `@Resource` patterns with **OpenAPI** docs (springdoc or Grails OpenAPI plugin)
+- Plugins / Grails profiles to keep modules separable (auth, booking, attendance, config, feature flags)
+- Use services for business logic; keep controllers thin; leverage dependency injection
+- Interceptors/filters for tenant isolation, audit logging, and feature-flag gates
 
-#### Backend (acceptable alternate)
-- **Python 3.12+ + FastAPI** (or Django + DRF) with SQLAlchemy/Alembic or Django ORM
-- Same security, RBAC, OpenAPI, and multi-tenant requirements as the Java path
-- Prefer Java for the main API unless the team standardizes on Python
+#### Backend (acceptable alternates)
+1. **Java 21 + Spring Boot 3.x** — if the team needs a pure-Java codebase without Grails conventions  
+2. **Python 3.12+ + FastAPI** (or Django + DRF) — only if explicitly preferred over JVM  
+
+Same security, RBAC, OpenAPI, and multi-tenant requirements apply to every alternate. Prefer **Grails + Groovy** for the main API and admin unless overridden.
 
 #### Mobile app (non-JavaScript)
-Prefer Java-ecosystem mobile technologies:
+Grails/Groovy power the **API**; mobile clients consume REST. Prefer:
 
 1. **Primary recommendation — Android (Kotlin / Java)**
    - **Kotlin-first** Android app (Java allowed where needed)
    - **Jetpack Compose** UI
    - **Android Jetpack:** Navigation, ViewModel, Room (local cache if needed)
-   - **Retrofit / OkHttp** for API calls
+   - **Retrofit / OkHttp** calling the Grails REST API
    - **EncryptedSharedPreferences** or **Android Keystore** for token storage
    - **BiometricPrompt** / AndroidX Biometric for on-demand fingerprint / face unlock
    - Material Design 3
+   - Note: do **not** build the mobile UI in Groovy; use Kotlin/Java Android (or Flutter below)
 
 2. **Cross-platform without JavaScript (optional)**
    - **Flutter (Dart)** if iOS + Android from one codebase is required
    - Secure storage + local_auth (or equivalent) for biometric opt-in
-   - Still talk to the Java/Python backend over REST
+   - Talk to the Grails backend over REST/JSON
 
 3. **iOS companion (only if needed)**
-   - Native **Swift** (not JS) when a dedicated iOS app is required alongside Android
+   - Native **Swift** when a dedicated iOS app is required alongside Android
    - Or ship Flutter for both platforms
 
 Avoid React Native, Expo, Ionic, Cordova, and other JS-based mobile frameworks.
 
-#### Admin / staff web UI (optional, non-JS SPA)
-Prefer server-rendered Java (or Python) admin over a JS SPA:
+#### Admin / staff web UI (preferred with Grails)
+Use Grails’ server-rendered stack — not a JS SPA:
 
-- **Spring Boot + Thymeleaf** or **Vaadin** (Java UI), with server-side auth checks
-- Or **Django Admin / Django templates** if the Python alternate backend is chosen
-- Keep admin routes fully authorized on the server
+- **GSP (Groovy Server Pages)** + Grails taglibs / layouts for club admin and reception
+- Spring Security annotations/URL mappings for every admin route
+- Optional: Grails fields plugin / scaffolding only for internal CRUD where it stays secure and customizable
+- If a Python alternate backend is chosen: Django templates/admin instead
 
 ### Infrastructure & DevOps
-- Dockerized services (multi-stage Java builds with a JRE runtime image; or Python slim images if alternate)
-- Environment-based config (12-factor); secrets via vault/secret manager, never in git
-- CI/CD with lint/static analysis (e.g. SpotBugs/Checkstyle or ruff/mypy), tests, and dependency scanning
+- Dockerized Grails/JVM services (multi-stage build → JRE runtime image)
+- Gradle-based builds (Grails default); reproducible `gradlew` wrapper committed
+- Environment-based config (`application.yml` / externalized secrets); never commit secrets
+- CI/CD with tests (Spock preferred for Groovy), static checks, and dependency scanning
 - HTTPS everywhere; HSTS for web admin
 
-You may swap Java ↔ Python for the API if justified, but **keep the no-JavaScript constraint** and preserve security + modularity requirements.
+You may fall back to Spring Boot (Java) or Python if justified, but **default to Groovy + Grails**, keep the **no-JavaScript constraint**, and preserve security + modularity requirements.
 
 ---
 
@@ -260,10 +268,10 @@ Ship Phase 1–3 as a coherent MVP unless told otherwise. Keep Phase 4–5 modul
 
 ## Constraints & Preferences
 
-- **Stack:** Java (Spring Boot) by default; Python (FastAPI/Django) only as an explicit alternate; **no JavaScript tech stack**  
-- Mobile: Kotlin/Java Android first; Flutter (Dart) if cross-platform is required  
-- Prefer clarity over cleverness; strongly typed code; explicit error handling  
-- Keep modules loosely coupled so features are modifiable on demand  
+- **Stack:** **Groovy + Grails** by default; Java/Spring Boot or Python only as explicit alternates; **no JavaScript tech stack**  
+- Mobile: Kotlin/Java Android first (consumes Grails REST); Flutter (Dart) if cross-platform is required  
+- Prefer clarity over cleverness; idiomatic Groovy/GORM where it stays readable; explicit error handling  
+- Keep Grails plugins/services loosely coupled so features are modifiable on demand  
 - Ask clarifying questions only when a decision blocks correctness; otherwise choose sensible defaults and document them  
 - Do not add payment/billing unless requested (design the config so billing can be added later)  
 
@@ -284,10 +292,10 @@ Ship Phase 1–3 as a coherent MVP unless told otherwise. Keep Phase 4–5 modul
 
 Before writing large amounts of code, respond with:
 
-1. Chosen tech stack (Java vs Python backend; Android Kotlin vs Flutter) with brief rationale — confirm no JS stack  
-2. Module map + which features are flag-gated  
-3. Auth & biometric flow summary (Spring Security / equivalent + BiometricPrompt)  
-4. Proposed folder/project structure (e.g. `backend/`, `android/` or `mobile/`)  
+1. Chosen tech stack (Grails/Groovy vs Spring Boot vs Python; Android Kotlin vs Flutter) with brief rationale — confirm no JS stack  
+2. Module map + which features are flag-gated (Grails plugins/packages)  
+3. Auth & biometric flow summary (Spring Security Core/REST + BiometricPrompt)  
+4. Proposed folder/project structure (e.g. `grails-app/`, `android/` or `mobile/`)  
 5. MVP milestone checklist  
 
 Then proceed to implement Phase 1 unless instructed otherwise.
