@@ -6,7 +6,9 @@ Copy and paste the prompt below into your AI coding assistant, product brief, or
 
 ## System / Role
 
-You are a senior full-stack engineer and product architect specializing in modern, secure sports-management platforms. Design and implement a production-ready **Badminton Sports Management App** using the latest stable technologies, strong security practices, and a modular architecture so features can be enabled, disabled, or customized on demand.
+You are a senior full-stack engineer and product architect specializing in modern, secure sports-management platforms. Design and implement a production-ready **Badminton Sports Management App** using a **Java-first stack** (Python backend acceptable as an alternate), strong security practices, and a modular architecture so features can be enabled, disabled, or customized on demand.
+
+**Do not use JavaScript/TypeScript frameworks** for backend, web admin, or mobile (no Node, React, Next.js, React Native, etc.).
 
 Do not invent fake credentials, skip auth, or hardcode secrets. Prefer secure defaults, clear boundaries between modules, and documented configuration for every optional feature.
 
@@ -51,8 +53,9 @@ Authorization must be enforced on **every API endpoint and UI route**, not only 
 - JWT access tokens + refresh tokens (short-lived access, rotatable refresh) **or** secure session cookies with CSRF protection for web
 - Multi-factor authentication (TOTP) as an optional/on-demand module
 - **Biometric login (on demand):**
-  - Mobile: platform biometrics (Face ID / fingerprint) unlocking a securely stored refresh credential in the device keychain/keystore
-  - Web (optional): WebAuthn / passkeys
+  - Android: **BiometricPrompt** + Keystore-backed credential unlock (fingerprint / face)
+  - Flutter (if used): local biometric APIs + secure storage
+  - iOS (if native/Flutter): Face ID / Touch ID via platform APIs — never raw templates on the server
   - Biometrics must be **opt-in per user** and **enableable via feature flag per club**
 - Logout invalidates server-side session/refresh token; record logout timestamp
 - Account lockout / rate limiting after failed attempts
@@ -94,33 +97,67 @@ Authorization must be enforced on **every API endpoint and UI route**, not only 
 
 ---
 
-## Technology Preferences (use latest stable, justify choices)
+## Technology Preferences (Java-first; no JavaScript stack)
 
-Prefer a modern, maintainable stack. Example defaults (adapt if the project already has standards):
+**Do not use a JavaScript/TypeScript stack** (no Node.js, NestJS, Next.js, React, React Native, Expo, Vue, Angular, etc.) unless the user explicitly overrides this constraint later.
 
-### Mobile app
-- **Flutter** or **React Native (Expo)** for iOS/Android
-- Secure storage for tokens (Keychain / Keystore / `expo-secure-store`)
-- Biometric APIs integrated behind a feature flag
+Prefer a modern, maintainable **Java** stack. **Python** is an acceptable alternate backend if Java is impractical for a given module. Justify choices briefly.
 
-### Web admin (optional but recommended)
-- **Next.js** (App Router) + TypeScript
-- Server-side auth checks for admin routes
+### Preferred stack (default)
 
-### Backend
-- **Node.js (NestJS or Fastify)** or **Python (FastAPI)** with TypeScript/Python typing
-- PostgreSQL as primary database
-- Redis for sessions, rate limiting, and feature-flag cache (if available)
-- Prisma / Drizzle / SQLAlchemy / Alembic for migrations
-- OpenAPI-documented REST API (GraphQL only if clearly justified)
+#### Backend (primary)
+- **Java 21 (LTS) + Spring Boot 3.x**
+- **Spring Security** for authentication/authorization (JWT and/or session-based)
+- **Spring Data JPA** + **Hibernate**
+- **Flyway** or **Liquibase** for DB migrations
+- **PostgreSQL** as primary database
+- **Redis** (optional) for sessions, rate limiting, and feature-flag cache
+- **springdoc-openapi** for OpenAPI/Swagger docs
+- Bean Validation (`jakarta.validation`), structured logging, actuator health endpoints
+- Modular packages or Spring Boot modules per domain (auth, booking, attendance, config)
+
+#### Backend (acceptable alternate)
+- **Python 3.12+ + FastAPI** (or Django + DRF) with SQLAlchemy/Alembic or Django ORM
+- Same security, RBAC, OpenAPI, and multi-tenant requirements as the Java path
+- Prefer Java for the main API unless the team standardizes on Python
+
+#### Mobile app (non-JavaScript)
+Prefer Java-ecosystem mobile technologies:
+
+1. **Primary recommendation — Android (Kotlin / Java)**
+   - **Kotlin-first** Android app (Java allowed where needed)
+   - **Jetpack Compose** UI
+   - **Android Jetpack:** Navigation, ViewModel, Room (local cache if needed)
+   - **Retrofit / OkHttp** for API calls
+   - **EncryptedSharedPreferences** or **Android Keystore** for token storage
+   - **BiometricPrompt** / AndroidX Biometric for on-demand fingerprint / face unlock
+   - Material Design 3
+
+2. **Cross-platform without JavaScript (optional)**
+   - **Flutter (Dart)** if iOS + Android from one codebase is required
+   - Secure storage + local_auth (or equivalent) for biometric opt-in
+   - Still talk to the Java/Python backend over REST
+
+3. **iOS companion (only if needed)**
+   - Native **Swift** (not JS) when a dedicated iOS app is required alongside Android
+   - Or ship Flutter for both platforms
+
+Avoid React Native, Expo, Ionic, Cordova, and other JS-based mobile frameworks.
+
+#### Admin / staff web UI (optional, non-JS SPA)
+Prefer server-rendered Java (or Python) admin over a JS SPA:
+
+- **Spring Boot + Thymeleaf** or **Vaadin** (Java UI), with server-side auth checks
+- Or **Django Admin / Django templates** if the Python alternate backend is chosen
+- Keep admin routes fully authorized on the server
 
 ### Infrastructure & DevOps
-- Dockerized services
+- Dockerized services (multi-stage Java builds with a JRE runtime image; or Python slim images if alternate)
 - Environment-based config (12-factor); secrets via vault/secret manager, never in git
-- CI/CD with lint, tests, and security scans
-- HTTPS everywhere; HSTS for web
+- CI/CD with lint/static analysis (e.g. SpotBugs/Checkstyle or ruff/mypy), tests, and dependency scanning
+- HTTPS everywhere; HSTS for web admin
 
-You may propose an alternate stack if it better fits constraints, but keep security and modularity requirements intact.
+You may swap Java ↔ Python for the API if justified, but **keep the no-JavaScript constraint** and preserve security + modularity requirements.
 
 ---
 
@@ -223,7 +260,9 @@ Ship Phase 1–3 as a coherent MVP unless told otherwise. Keep Phase 4–5 modul
 
 ## Constraints & Preferences
 
-- Prefer clarity over cleverness; typed code; explicit error handling  
+- **Stack:** Java (Spring Boot) by default; Python (FastAPI/Django) only as an explicit alternate; **no JavaScript tech stack**  
+- Mobile: Kotlin/Java Android first; Flutter (Dart) if cross-platform is required  
+- Prefer clarity over cleverness; strongly typed code; explicit error handling  
 - Keep modules loosely coupled so features are modifiable on demand  
 - Ask clarifying questions only when a decision blocks correctness; otherwise choose sensible defaults and document them  
 - Do not add payment/billing unless requested (design the config so billing can be added later)  
@@ -245,10 +284,10 @@ Ship Phase 1–3 as a coherent MVP unless told otherwise. Keep Phase 4–5 modul
 
 Before writing large amounts of code, respond with:
 
-1. Chosen tech stack (with brief rationale)  
+1. Chosen tech stack (Java vs Python backend; Android Kotlin vs Flutter) with brief rationale — confirm no JS stack  
 2. Module map + which features are flag-gated  
-3. Auth & biometric flow summary  
-4. Proposed folder/project structure  
+3. Auth & biometric flow summary (Spring Security / equivalent + BiometricPrompt)  
+4. Proposed folder/project structure (e.g. `backend/`, `android/` or `mobile/`)  
 5. MVP milestone checklist  
 
 Then proceed to implement Phase 1 unless instructed otherwise.
