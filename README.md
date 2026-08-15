@@ -8,7 +8,7 @@ This repo is to learn Python from scratch by building **real products**, not onl
 2. Pick one idea and use a copy-paste build prompt:
    - [Badminton club management](prompts/badminton-sports-app-prompt.md)
    - [Family medicine reminders](prompts/family-medicine-adherence-prompt.md)
-   - [Small clinic queue](prompts/clinic-queue-prompt.md)
+   - [Small clinic queue](prompts/clinic-queue-prompt.md) — [UI/UX kit (Figma plugin + prototype)](design/queuelite/README.md)
    - [Document expiry vault](prompts/document-expiry-vault-prompt.md)
 
 Each prompt is written so you can paste it into an AI coding assistant and implement an MVP with auth, tests, and a README.

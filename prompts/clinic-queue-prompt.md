@@ -2,6 +2,8 @@
 
 Copy and paste the prompt below into your AI coding assistant, product brief, or engineering kickoff.
 
+**UI/UX:** screens, flows, and a Figma generator live in [`design/queuelite/`](../design/queuelite/README.md). Open the HTML prototype or import `figma-plugin/manifest.json` into Figma to create the design file.
+
 ---
 
 ## System / Role
