@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QueueLite — clickable prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../frames/ui.css" />
+  <style>
+    body { background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+    .bar { padding: 12px 20px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; border-bottom: 1px solid #334155; }
+    .bar strong { color: #fff; }
+    .bar button { background: #334155; color: #fff; border: 0; border-radius: 8px; padding: 8px 12px; cursor: pointer; font-size: 12px; }
+    .bar button.on { background: #0f766e; }
+    .stage { padding: 24px; overflow: auto; }
+    .hint { font-size: 12px; color: #94a3b8; }
+    iframe { border: 0; background: #000; box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <strong>QueueLite prototype</strong>
+    <span class="hint">Same screens the Figma plugin generates. Click a screen, or open the gallery.</span>
+    <button data-go="cover">Cover</button>
+    <button data-go="login">Login</button>
+    <button data-go="reception" class="on">Reception</button>
+    <button data-go="issue">Issue token</button>
+    <button data-go="book">Book slot</button>
+    <button data-go="doctor">Doctor</button>
+    <button data-go="paused">Paused</button>
+    <button data-go="admin">Admin</button>
+    <button data-go="patient-waiting">Patient</button>
+    <button data-go="patient-called">Called</button>
+    <button data-go="tv">TV board</button>
+    <a href="index.html" style="color:#5eead4;font-size:12px;margin-left:auto">All screens gallery</a>
+  </div>
+  <div class="stage">
+    <iframe id="frame" src="../frames/capture.html?frame=reception" width="1440" height="900"></iframe>
+  </div>
+  <script>
+    const sizes = {
+      cover: [1440, 900], login: [1440, 900], reception: [1440, 900], issue: [1440, 900],
+      book: [1440, 900], doctor: [1440, 900], paused: [1440, 900], admin: [1440, 900],
+      "patient-waiting": [390, 844], "patient-called": [390, 844], tv: [1920, 1080]
+    };
+    document.querySelectorAll("[data-go]").forEach((b) => {
+      b.onclick = () => {
+        document.querySelectorAll("[data-go]").forEach((x) => x.classList.remove("on"));
+        b.classList.add("on");
+        const id = b.getAttribute("data-go");
+        const [w, h] = sizes[id];
+        const f = document.getElementById("frame");
+        f.width = w;
+        f.height = h;
+        f.src = "../frames/capture.html?frame=" + id;
+      };
+    });
+  </script>
+</body>
+</html>
