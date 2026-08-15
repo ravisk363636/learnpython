@@ -1,4 +1,12 @@
-figma.showUI(__html__, { width: 380, height: 210 });
+figma.showUI(__html__, { width: 400, height: 230 });
+
+const FONT = {
+  family: "Inter",
+  Regular: "Regular",
+  Medium: "Medium",
+  "Semi Bold": "Semi Bold",
+  Bold: "Bold",
+};
 
 const C = {
   brand: hex("#0F766E"),
@@ -34,10 +42,27 @@ function paint(color) {
 }
 
 async function fonts() {
-  const styles = ["Regular", "Medium", "Semi Bold", "Bold"];
-  for (const style of styles) {
-    await figma.loadFontAsync({ family: "Inter", style });
+  async function ok(family, style) {
+    try {
+      await figma.loadFontAsync({ family, style });
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
+  if (await ok("Inter", "Regular")) {
+    FONT.family = "Inter";
+    FONT.Medium = (await ok("Inter", "Medium")) ? "Medium" : "Regular";
+    FONT["Semi Bold"] = (await ok("Inter", "Semi Bold")) ? "Semi Bold" : FONT.Medium;
+    FONT.Bold = (await ok("Inter", "Bold")) ? "Bold" : FONT["Semi Bold"];
+    return;
+  }
+  FONT.family = "Roboto";
+  await figma.loadFontAsync({ family: "Roboto", style: "Regular" });
+  FONT.Regular = "Regular";
+  FONT.Medium = (await ok("Roboto", "Medium")) ? "Medium" : "Regular";
+  FONT["Semi Bold"] = (await ok("Roboto", "Bold")) ? "Bold" : "Regular";
+  FONT.Bold = FONT["Semi Bold"];
 }
 
 function frame(name, w, h, fill, radius) {
@@ -84,7 +109,8 @@ function fillChild(n) {
 
 function text(chars, size, style, color, opts) {
   const t = figma.createText();
-  t.fontName = { family: "Inter", style: style || "Regular" };
+  const st = FONT[style || "Regular"] || FONT.Regular;
+  t.fontName = { family: FONT.family, style: st };
   t.characters = chars;
   t.fontSize = size;
   t.fills = paint(color || C.ink);
@@ -129,7 +155,31 @@ function btn(label, variant) {
   return f;
 }
 
-function sidebar(active) {
+function clickTo(from, to) {
+  if (!from || !to) return;
+  from.reactions = [
+    {
+      trigger: { type: "ON_CLICK" },
+      actions: [
+        {
+          type: "NODE",
+          destinationId: to.id,
+          navigation: "NAVIGATE",
+          transition: { type: "DISSOLVE", duration: 0.2, easing: { type: "EASE_OUT" } },
+          preserveScrollPosition: false,
+        },
+      ],
+    },
+  ];
+}
+
+function findName(root, name) {
+  return root.findOne(function (n) {
+    return n.name === name;
+  });
+}
+
+function sidebar(active, opts) {
   const s = auto("Sidebar", "VERTICAL", {
     w: 240,
     h: 900,
@@ -139,7 +189,8 @@ function sidebar(active) {
   });
   s.appendChild(text("QueueLite", 18, "Bold", C.white));
   s.appendChild(text("Greenfield Family Clinic", 11, "Regular", C.mute));
-  const nav = ["Today", "Appointments", "Doctors", "Hours & SMS", "Audit"];
+  const nav = (opts && opts.nav) || ["Today", "Appointments", "Doctors", "Hours & SMS", "Audit"];
+  const who = (opts && opts.who) || "Priya  ·  Reception";
   for (const item of nav) {
     const row = auto("Nav/" + item, "HORIZONTAL", {
       w: 200,
@@ -159,7 +210,7 @@ function sidebar(active) {
   const spacer = frame("spacer", 200, 1, C.ink);
   spacer.layoutGrow = 1;
   s.appendChild(spacer);
-  s.appendChild(text("Priya  ·  Reception", 12, "Medium", C.white));
+  s.appendChild(text(who, 12, "Medium", C.white));
   s.appendChild(text("Sign out", 12, "Regular", C.mute));
   return s;
 }
@@ -182,11 +233,11 @@ function topbar(title, right) {
   return bar;
 }
 
-function staffShell(pageTitle, activeNav, bodyBuilder) {
+function staffShell(pageTitle, activeNav, bodyBuilder, shellOpts) {
   const art = frame("Desktop / " + pageTitle, 1440, 900, C.app);
   const row = auto("Shell", "HORIZONTAL", { w: 1440, h: 900, fill: C.app, gap: 0 });
   row.resize(1440, 900);
-  const side = sidebar(activeNav);
+  const side = sidebar(activeNav, shellOpts);
   const main = auto("Main", "VERTICAL", { w: 1200, h: 900, fill: C.app, gap: 0 });
   main.resize(1200, 900);
   main.appendChild(topbar(pageTitle));
@@ -449,7 +500,8 @@ async function generate() {
 
   const docPage = figma.createPage();
   docPage.name = "03 Doctor";
-  const doctor = staffShell("My queue", "Today", (body) => {
+  const doctorOpts = { nav: ["My queue"], who: "Dr. Meera Shah  ·  Doctor" };
+  const doctor = staffShell("My queue", "My queue", (body) => {
     const banner = auto("PauseBar", "HORIZONTAL", {
       w: 1152,
       hugCross: true,
@@ -473,12 +525,12 @@ async function generate() {
     acts.appendChild(btn("No-show", "danger"));
     acts.appendChild(btn("Call next"));
     body.appendChild(acts);
-  });
+  }, doctorOpts);
   docPage.appendChild(doctor);
   doctor.x = 0;
   doctor.y = 0;
 
-  const paused = staffShell("My queue", "Today", (body) => {
+  const paused = staffShell("My queue", "My queue", (body) => {
     const banner = auto("Paused", "VERTICAL", {
       w: 1152,
       hugCross: true,
@@ -493,13 +545,14 @@ async function generate() {
     body.appendChild(banner);
     body.appendChild(btn("Resume queue"));
     body.appendChild(queueRow("A-14", "Ananya K.", "Waiting after pause", "Waiting", "Held"));
-  });
+  }, doctorOpts);
   docPage.appendChild(paused);
   paused.x = 1520;
   paused.y = 0;
 
   const admPage = figma.createPage();
   admPage.name = "04 Admin";
+  const adminOpts = { who: "Kavita  ·  Admin" };
   const doctors = staffShell("Doctors & rooms", "Doctors", (body) => {
     const cards = auto("Docs", "HORIZONTAL", { w: 1152, hugCross: true, gap: 16 });
     for (const d of [
@@ -523,7 +576,7 @@ async function generate() {
     }
     body.appendChild(cards);
     body.appendChild(btn("Add doctor"));
-  });
+  }, adminOpts);
   admPage.appendChild(doctors);
   doctors.x = 0;
   doctors.y = 0;
@@ -545,7 +598,7 @@ async function generate() {
     card.appendChild(text("N = 2   ·   SMS flag ON   ·   Email fallback in dev", 14, "Regular", C.ink2));
     card.appendChild(text("TV board never shows names or phone numbers.", 12, "Medium", C.warn));
     body.appendChild(card);
-  });
+  }, adminOpts);
   admPage.appendChild(hours);
   hours.x = 1520;
   hours.y = 0;
@@ -573,7 +626,7 @@ async function generate() {
       row.appendChild(text(r[2], 12, "Regular", C.mute));
       body.appendChild(row);
     }
-  });
+  }, adminOpts);
   admPage.appendChild(audit);
   audit.x = 0;
   audit.y = 980;
@@ -592,7 +645,7 @@ async function generate() {
     card.appendChild(text("You cannot open another clinic", 18, "Bold", C.danger));
     card.appendChild(text("Reception is limited to Greenfield Family Clinic. This is tenant isolation, not a missing button.", 13, "Regular", C.ink2, { width: 560 }));
     body.appendChild(card);
-  });
+  }, adminOpts);
   admPage.appendChild(denied);
   denied.x = 1520;
   denied.y = 980;
@@ -772,6 +825,28 @@ async function generate() {
   compPage.appendChild(b1);
   compPage.appendChild(b2);
   compPage.appendChild(b3);
+
+  clickTo(findName(login, "Button/Sign in"), today);
+  clickTo(findName(today, "Button/Issue token"), issue);
+  clickTo(findName(today, "Button/Book appointment"), book);
+  clickTo(findName(issue, "Button/Cancel"), today);
+  clickTo(findName(issue, "Button/Issue next number"), today);
+  clickTo(findName(empty, "Button/Issue token"), issue);
+  clickTo(findName(doctor, "Button/Pause queue"), paused);
+  clickTo(findName(paused, "Button/Resume queue"), doctor);
+  clickTo(findName(today, "Nav/Appointments"), book);
+  clickTo(findName(book, "Nav/Today"), today);
+  clickTo(pWait, pNext);
+  clickTo(pNext, pCalled);
+
+  try {
+    loginPage.flowStartingPoints = [{ nodeId: login.id, name: "Staff login" }];
+    recPage.flowStartingPoints = [{ nodeId: today.id, name: "Reception" }];
+    patPage.flowStartingPoints = [{ nodeId: pWait.id, name: "Patient signed link" }];
+    tvPage.flowStartingPoints = [{ nodeId: tv1.id, name: "Waiting room TV" }];
+  } catch (e) {
+    /* older plugin API */
+  }
 
   figma.currentPage = coverPage;
 }

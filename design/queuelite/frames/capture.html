@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>QueueLite frames</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="ui.css" />
+</head>
+<body>
+  <section data-frame="cover" data-w="1440" data-h="900" class="cover">
+    <div>
+      <span class="pill consult">MVP UI / UX</span>
+      <h1>QueueLite</h1>
+      <p style="font-size:22px;color:#94a3b8;max-width:720px">Token queue + appointments for a 1–4 doctor clinic. Names never appear on the waiting-room TV.</p>
+      <p style="color:#64748b">Greenfield Family Clinic · Staff · Doctor · Patient · TV</p>
+    </div>
+  </section>
+
+  <section data-frame="login" data-w="1440" data-h="900" class="desktop login-wrap" style="grid-template-columns:1fr">
+    <div class="card" style="width:420px">
+      <div style="font-weight:700;color:var(--brand-dark);font-size:22px">QueueLite</div>
+      <div style="font-weight:600;margin:8px 0 12px">Staff sign in</div>
+      <div class="field">Work email</div>
+      <div>priya@greenfield.clinic</div>
+      <div class="field">Password</div>
+      <div>••••••••••••</div>
+      <div class="btns" style="margin-top:16px"><button class="btn">Sign in</button></div>
+      <p style="font-size:11px;color:var(--mute);margin:12px 0 0">Locked after repeated failures. Patients use a signed SMS link, not this screen.</p>
+    </div>
+  </section>
+
+  <section data-frame="reception" data-w="1440" data-h="900" class="desktop">
+    <aside class="side">
+      <strong>QueueLite</strong>
+      <div class="clinic">Greenfield Family Clinic</div>
+      <div class="navitem on">Today</div>
+      <div class="navitem">Appointments</div>
+      <div class="navitem">Doctors</div>
+      <div class="navitem">Hours & SMS</div>
+      <div class="navitem">Audit</div>
+      <div class="who">Priya · Reception<br>Sign out</div>
+    </aside>
+    <div class="main">
+      <div class="top">Today’s queue</div>
+      <div class="body">
+        <div class="kpis">
+          <div class="kpi"><span>Waiting</span><strong>11</strong></div>
+          <div class="kpi"><span>Now serving</span><strong>A-14</strong></div>
+          <div class="kpi"><span>Appointments left</span><strong>7</strong></div>
+          <div class="kpi"><span>Avg wait</span><strong>18 min</strong></div>
+        </div>
+        <div class="btns">
+          <button class="btn">Issue token</button>
+          <button class="btn ghost">Book appointment</button>
+          <button class="btn">Call next</button>
+        </div>
+        <strong>Dr. Meera Shah · Room 1</strong>
+        <div class="qrow"><div class="qleft"><span class="tok">A-14</span><div>Ananya K.<br><small>Walk-in</small></div></div><span class="pill called">Called</span></div>
+        <div class="qrow"><div class="qleft"><span class="tok">A-15</span><div>Rahul M.<br><small>Appointment 10:30</small></div></div><span class="pill waiting">Waiting · ~12 min</span></div>
+        <div class="qrow"><div class="qleft"><span class="tok">A-16</span><div>Fatima S.<br><small>Walk-in</small></div></div><span class="pill waiting">Waiting · ~24 min</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section data-frame="issue" data-w="1440" data-h="900" class="desktop">
+    <aside class="side">
+      <strong>QueueLite</strong>
+      <div class="clinic">Greenfield Family Clinic</div>
+      <div class="navitem on">Today</div>
+      <div class="navitem">Appointments</div>
+      <div class="who">Priya · Reception</div>
+    </aside>
+    <div class="main">
+      <div class="top">Issue token</div>
+      <div class="body">
+        <div class="card" style="max-width:560px">
+          <strong style="font-size:18px">New walk-in</strong>
+          <div class="field">Doctor</div>
+          <div>Dr. Meera Shah · GP · Room 1</div>
+          <div class="field">Patient name (staff only — never on TV)</div>
+          <div>Sanjay Rao</div>
+          <div class="field">Phone (notify when 2 ahead)</div>
+          <div>+91 98•••• 214</div>
+          <div class="btns" style="margin-top:16px">
+            <button class="btn">Issue next number</button>
+            <button class="btn ghost">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-frame="book" data-w="1440" data-h="900" class="desktop">
+    <aside class="side">
+      <strong>QueueLite</strong>
+      <div class="clinic">Greenfield Family Clinic</div>
+      <div class="navitem">Today</div>
+      <div class="navitem on">Appointments</div>
+      <div class="who">Priya · Reception</div>
+    </aside>
+    <div class="main">
+      <div class="top">Book appointment</div>
+      <div class="body">
+        <strong>Wednesday 15 Aug · Dr. Arun Patel</strong>
+        <div class="slots">
+          <div class="slot">09:00</div><div class="slot">09:20</div><div class="slot">09:40</div>
+          <div class="slot taken">10:00</div><div class="slot">10:20</div><div class="slot">10:40</div>
+          <div class="slot">11:00</div><div class="slot">11:20</div>
+        </div>
+        <p style="color:var(--mute);font-size:12px;margin:0">Taken slots cannot be double-booked. Walk-ins do not occupy calendar slots.</p>
+        <button class="btn">Confirm 10:20 with Dr. Patel</button>
+      </div>
+    </div>
+  </section>
+
+  <section data-frame="doctor" data-w="1440" data-h="900" class="desktop">
+    <aside class="side">
+      <strong>QueueLite</strong>
+      <div class="clinic">Greenfield Family Clinic</div>
+      <div class="navitem on">My queue</div>
+      <div class="who">Dr. Meera Shah · Doctor</div>
+    </aside>
+    <div class="main">
+      <div class="top">My queue</div>
+      <div class="body">
+        <div class="banner"><span>Queue is live · Room 1</span><button class="btn ghost">Pause queue</button></div>
+        <div class="qrow"><div class="qleft"><span class="tok">A-14</span><div>Ananya K.<br><small>In your room</small></div></div><span class="pill consult">In consult</span></div>
+        <div class="qrow"><div class="qleft"><span class="tok">A-15</span><div>Rahul M.<br><small>Next</small></div></div><span class="pill waiting">Waiting</span></div>
+        <div class="btns">
+          <button class="btn">Mark done</button>
+          <button class="btn danger">No-show</button>
+          <button class="btn">Call next</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-frame="paused" data-w="1440" data-h="900" class="desktop">
+    <aside class="side">
+      <strong>QueueLite</strong>
+      <div class="clinic">Greenfield Family Clinic</div>
+      <div class="navitem on">My queue</div>
+      <div class="who">Dr. Meera Shah · Doctor</div>
+    </aside>
+    <div class="main">
+      <div class="top">My queue</div>
+      <div class="body">
+        <div class="banner" style="display:block">
+          <div>Paused — lunch / emergency</div>
+          <div style="font-weight:400;color:var(--ink2);font-size:13px;margin-top:6px">TV shows PAUSED. Call next is disabled until you resume.</div>
+        </div>
+        <button class="btn">Resume queue</button>
+      </div>
+    </div>
+  </section>
+
+  <section data-frame="admin" data-w="1440" data-h="900" class="desktop">
+    <aside class="side">
+      <strong>QueueLite</strong>
+      <div class="clinic">Greenfield Family Clinic</div>
+      <div class="navitem">Today</div>
+      <div class="navitem on">Doctors</div>
+      <div class="who">Kavita · Admin</div>
+    </aside>
+    <div class="main">
+      <div class="top">Doctors & rooms</div>
+      <div class="body" style="flex-direction:row;gap:16px">
+        <div class="card" style="width:360px">
+          <div style="font-size:18px;font-weight:700">Dr. Meera Shah</div>
+          <p>GP · Room 1 · 12 min avg</p>
+          <span class="pill consult">Token prefix A</span>
+        </div>
+        <div class="card" style="width:360px">
+          <div style="font-size:18px;font-weight:700">Dr. Arun Patel</div>
+          <p>Dental · Room 2 · 20 min avg</p>
+          <span class="pill consult">Token prefix B</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-frame="patient-waiting" data-w="390" data-h="844" class="phone">
+    <div style="font-size:12px;color:var(--mute)">Greenfield Family Clinic</div>
+    <div>Your token</div>
+    <p class="phone-token">A-16</p>
+    <span class="pill called">2 people ahead</span>
+    <div class="card" style="margin-top:16px">
+      <div style="font-size:22px;font-weight:700">About 24 min</div>
+      <p style="font-size:12px;color:var(--ink2)">We’ll text you when you are 2 ahead. This link cannot be guessed.</p>
+    </div>
+    <p style="color:var(--mute);font-size:13px">Now serving A-14 · Dr. Shah</p>
+  </section>
+
+  <section data-frame="patient-called" data-w="390" data-h="844" class="phone">
+    <h3 style="margin:0;color:var(--brand-dark)">Please come in</h3>
+    <p class="phone-token">A-16</p>
+    <p>Room 1 · Dr. Meera Shah</p>
+  </section>
+
+  <section data-frame="tv" data-w="1920" data-h="1080" class="tv">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong style="font-size:28px">Greenfield Family Clinic</strong>
+      <span style="color:#94a3b8;font-size:20px">Wed 15 Aug · 09:42</span>
+    </div>
+    <div class="tv-now">
+      <div style="color:#94a3b8">Now serving</div>
+      <div class="n">A-14</div>
+      <div style="color:#94a3b8;font-size:24px">Room 1</div>
+    </div>
+    <div class="tv-up">
+      <div><span style="color:#94a3b8">Up next</span><strong>A-15</strong></div>
+      <div><span style="color:#94a3b8">Up next</span><strong>A-16</strong></div>
+      <div><span style="color:#94a3b8">Up next</span><strong>A-17</strong></div>
+    </div>
+    <p style="color:#64748b">Token numbers only. Names are never displayed.</p>
+  </section>
+
+  <script>
+    const id = new URLSearchParams(location.search).get("frame") || "cover";
+    const el = document.querySelector('[data-frame="' + id + '"]');
+    if (el) {
+      el.classList.add("show");
+      document.title = "QueueLite · " + id;
+    }
+  </script>
+</body>
+</html>

@@ -1,18 +1,18 @@
 # QueueLite UI / UX (Figma)
 
-Figma’s cloud API cannot create a `.fig` file from this environment. This folder is the UI kit for `prompts/clinic-queue-prompt.md`, in two forms:
+There is no way to check a binary `.fig` into git from this environment. This kit **creates the Figma file in your Figma account** (native frames, auto layout, prototype clicks), and also ships HTML + PNG so you can import without the plugin.
 
-1. **Figma plugin** — generates native Figma pages, frames, and components in *your* file.
-2. **HTML prototype** — same screens in the browser, for review without Figma.
+Spec: `prompts/clinic-queue-prompt.md`. Demo clinic: **Greenfield Family Clinic** (fictional).
 
 ## Create the Figma file (about 1 minute)
 
-1. Open [Figma](https://www.figma.com) → **New design file**.
+1. Open [Figma](https://www.figma.com) → **New design file**. Name it `QueueLite — clinic queue UI`.
 2. Menu: **Plugins → Development → Import plugin from manifest…**
-3. Select `design/queuelite/figma-plugin/manifest.json` from this repo.
+3. Select `design/queuelite/figma-plugin/manifest.json`.
 4. Run **QueueLite UI Generator** → **Generate Figma screens**.
+5. Press **Present (▶)** to click Login → Reception → Issue token / Book, Doctor pause, Patient waiting → called.
 
-You should get pages:
+Pages created:
 
 | Page | Contents |
 |------|----------|
@@ -22,20 +22,24 @@ You should get pages:
 | 03 Doctor | Live queue, paused |
 | 04 Admin | Doctors, hours & SMS, audit, tenant denied |
 | 05 Patient mobile | Waiting, next, called, invalid signed link |
-| 06 TV board | Live + paused (numbers only, no names) |
-| 07 Login | Staff sign-in |
+| 06 TV board | Live + paused (**numbers only**, no names) |
+| 07 Login | Staff sign-in (patients never use this) |
 | 08 Components | Status rows + buttons |
 
 Optional: Tokens Studio → import `design/queuelite/tokens/tokens.json`.
 
-## Preview without Figma
+### Import without the plugin
 
-Open `design/queuelite/prototype/index.html` in a browser.
+- **html.to.design**: paste `design/queuelite/frames/capture.html` (open `?frame=reception` etc.).
+- **Drag PNGs** from `design/queuelite/previews/` onto the canvas (`reception.png`, `tv.png`, …).
 
-Static captures: `design/queuelite/previews/cover.png`, `design/queuelite/previews/reception.png`.
+## Preview in a browser (no Figma)
+
+- Clickable screens: `design/queuelite/prototype/app.html`
+- Full gallery: `design/queuelite/prototype/index.html`
+
+Regenerate PNGs: `python3 design/queuelite/export_previews.py` (needs Chrome).
 
 ## UX notes
 
 See `design/queuelite/ux/flows.md` (appointment vs walk-in mix, privacy on TV, signed patient URLs).
-
-Demo clinic in the mockups: **Greenfield Family Clinic** (fictional).
