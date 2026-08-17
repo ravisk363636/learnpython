@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Appointments{% endblock %}
+{% block content %}
+<h1>Book a slot</h1>
+<p class="muted">Appointments hold a time window. A walk-in token is issued only at check-in. Due appointments are called before walk-ins.</p>
+<section class="card">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Book</button>
+  </form>
+</section>
+<section class="card">
+  <h2>Open slots today ({{ day }})</h2>
+  {% for row in doctor_slots %}
+    <h3>{{ row.doctor.display_name }}</h3>
+    <p>
+      {% for slot in row.slots %}
+        <span class="muted">{{ slot|date:"H:i" }}</span>{% if not forloop.last %} · {% endif %}
+      {% empty %}None
+      {% endfor %}
+    </p>
+  {% endfor %}
+</section>
+<section class="card">
+  <h2>Upcoming</h2>
+  <table>
+    <thead><tr><th>When</th><th>Doctor</th><th>Patient</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+    {% for a in upcoming %}
+      <tr>
+        <td>{{ a.start_at }}</td>
+        <td>{{ a.doctor.display_name }}</td>
+        <td>{{ a.patient_name }}</td>
+        <td>{{ a.get_status_display }}</td>
+        <td>
+          {% if a.status == "booked" %}
+          <form method="post" action="{% url 'appointments:check_in' a.id %}" style="display:inline">
+            {% csrf_token %}<button type="submit">Check in</button>
+          </form>
+          <form method="post" action="{% url 'appointments:cancel' a.id %}" style="display:inline">
+            {% csrf_token %}<button type="submit" class="danger">Cancel</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5" class="muted">No appointments</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

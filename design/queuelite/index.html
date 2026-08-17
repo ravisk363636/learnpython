@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QueueLite UI prototype</title>
+  <style>
+    :root { font-family: "Source Sans 3", sans-serif; background: #f4f7f6; color: #1c2b29; }
+    body { margin: 0; }
+    header { background: #115e59; color: #fff; padding: 1rem 1.5rem; }
+    main { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; padding: 1.5rem; }
+    article { background: #fff; border-radius: 12px; padding: 1rem; border: 1px solid #d7e3df; }
+    .token { font-size: 3rem; font-weight: 800; }
+    nav a { color: #fff; margin-right: 1rem; }
+    .tv { background: #0b1f1c; color: #ecfdf5; }
+    .tv .token { font-size: 4.5rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>QueueLite</strong>
+    <nav>
+      <a href="#login">Login</a>
+      <a href="#reception">Reception</a>
+      <a href="#issue">Issue</a>
+      <a href="#appointments">Appointments</a>
+      <a href="#doctor">Doctor</a>
+      <a href="#tv">TV</a>
+      <a href="#patient">Patient</a>
+      <a href="#setup">Setup</a>
+    </nav>
+  </header>
+  <main>
+    <article id="login">
+      <h2>1. Staff login</h2>
+      <p>Username / password. Rate limited. Roles: admin, reception, doctor.</p>
+    </article>
+    <article id="reception">
+      <h2>2. Reception today</h2>
+      <p>Now serving <span class="token">012</span></p>
+      <p>Waiting list with names. Call next. Reorder (audited).</p>
+    </article>
+    <article id="issue">
+      <h2>3. Issue walk-in token</h2>
+      <p>Doctor + name + optional phone/email. Prints signed patient link.</p>
+    </article>
+    <article id="appointments">
+      <h2>4. Appointments</h2>
+      <p>Book doctor + slot (no overlap). Check-in issues a real token. Due appointments jump walk-ins.</p>
+    </article>
+    <article id="doctor">
+      <h2>5. Doctor queue</h2>
+      <p>Own list only. Pause (lunch/emergency). Done / no-show.</p>
+    </article>
+    <article id="tv" class="tv">
+      <h2>6. TV board</h2>
+      <p>Now serving</p>
+      <div class="token">012</div>
+      <p>Up next 013 · 014 — numbers only, never names or phones.</p>
+    </article>
+    <article id="patient">
+      <h2>7. Patient status</h2>
+      <p>Signed URL. Own token, ETA, people ahead. Cannot enumerate other tokens.</p>
+    </article>
+    <article id="setup">
+      <h2>8. Clinic setup</h2>
+      <p>Doctors, rooms, hours, average consult minutes, SMS flag, token scope (per doctor vs clinic).</p>
+    </article>
+  </main>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}QueueLite{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <header class="site">
+    <div class="brand"><a href="{% url 'clinics:home' %}">QueueLite{% if current_clinic %} · {{ current_clinic.name }}{% endif %}</a></div>
+    {% if user.is_authenticated %}
+    <nav>
+      <a href="{% url 'clinics:home' %}">Today</a>
+      {% if user.role == "admin" or user.role == "reception" or user.is_superuser %}
+        <a href="{% url 'queues:issue' %}">Issue token</a>
+        <a href="{% url 'appointments:book' %}">Appointments</a>
+      {% endif %}
+      {% if user.role == "admin" or user.is_superuser %}
+        <a href="{% url 'clinics:setup' %}">Setup</a>
+      {% endif %}
+      {% if user.role == "doctor" or user.is_superuser %}
+        <a href="{% url 'queues:doctor_queue' %}">My queue</a>
+      {% endif %}
+      {% if current_clinic %}
+        <a href="{% url 'queues:tv_board' current_clinic.slug %}">TV board</a>
+      {% endif %}
+      <form method="post" action="{% url 'accounts:logout' %}" style="display:inline">
+        {% csrf_token %}
+        <button type="submit" class="secondary">Log out {{ user.username }}</button>
+      </form>
+    </nav>
+    {% endif %}
+  </header>
+  <main class="wrap">
+    {% for message in messages %}
+      <div class="flash {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

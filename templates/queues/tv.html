@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="{{ poll }}">
+  <title>Now serving · {{ clinic.name }}</title>
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body class="tv">
+  <header style="padding:1.5rem 2rem;display:flex;justify-content:space-between">
+    <h1 style="margin:0">{{ clinic.name }}</h1>
+    <p class="muted">Token numbers only</p>
+  </header>
+  <div class="tv-grid">
+    {% for col in columns %}
+    <section class="tv-col">
+      <h2>{{ col.doctor.display_name }}{% if col.doctor.queue_paused %} · paused{% endif %}</h2>
+      <p>Now serving</p>
+      <div class="tv-now">{% if col.now %}{{ col.now.display_number }}{% else %}—{% endif %}</div>
+      <p>Up next</p>
+      <div class="tv-next">
+        {% for t in col.up_next %}{{ t.display_number }}{% if not forloop.last %} · {% endif %}{% empty %}—{% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+  </div>
+</body>
+</html>

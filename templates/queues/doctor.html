@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}{{ doctor.display_name }} queue{% endblock %}
+{% block content %}
+<h1>{{ doctor.display_name }}</h1>
+{% if doctor.queue_paused %}<p class="paused">Paused: {{ doctor.pause_reason }}</p>{% endif %}
+<section class="card">
+  <p class="muted">Now serving</p>
+  <div class="token">{% if now %}{{ now.display_number }}{% else %}—{% endif %}</div>
+  {% if now %}
+    <p>{{ now.patient_name }} · {{ now.get_status_display }}</p>
+    <form method="post" action="{% url 'queues:token_action' now.id %}" style="display:inline">
+      {% csrf_token %}<input type="hidden" name="action" value="in_consult"><button type="submit">Start consult</button>
+    </form>
+    <form method="post" action="{% url 'queues:token_action' now.id %}" style="display:inline">
+      {% csrf_token %}<input type="hidden" name="action" value="done"><button type="submit">Done</button>
+    </form>
+    <form method="post" action="{% url 'queues:token_action' now.id %}" style="display:inline">
+      {% csrf_token %}<input type="hidden" name="action" value="no_show"><button type="submit" class="warn">No-show</button>
+    </form>
+  {% endif %}
+  <form method="post" action="{% url 'queues:call_next' doctor.id %}" style="margin-top:1rem">
+    {% csrf_token %}
+    <button type="submit" {% if doctor.queue_paused %}disabled{% endif %}>Call next</button>
+  </form>
+</section>
+<section class="card">
+  <h2>Pause</h2>
+  <form method="post" action="{% url 'queues:pause' doctor.id %}">
+    {% csrf_token %}
+    {% if doctor.queue_paused %}
+      <input type="hidden" name="paused" value="0">
+      <button type="submit">Resume queue</button>
+    {% else %}
+      <input type="hidden" name="paused" value="1">
+      <label>Reason <input name="reason" placeholder="Lunch, emergency…"></label>
+      <button type="submit" class="warn">Pause queue</button>
+    {% endif %}
+  </form>
+</section>
+<section class="card">
+  <h2>Waiting</h2>
+  <table>
+    <thead><tr><th>#</th><th>Name</th></tr></thead>
+    {% for t in waiting %}
+      <tr><td>{{ t.display_number }}</td><td>{{ t.patient_name }}</td></tr>
+    {% empty %}
+      <tr><td colspan="2" class="muted">Empty</td></tr>
+    {% endfor %}
+  </table>
+</section>
+{% endblock %}

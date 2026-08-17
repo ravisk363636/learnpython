@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family: sans-serif; padding: 12px;">
+  <p>Creates native frames + prototype links for QueueLite MVP screens.</p>
+  <button id="go">Generate screens</button>
+  <script>
+    document.getElementById("go").onclick = () => {
+      parent.postMessage({ pluginMessage: { type: "generate" } }, "*");
+    };
+  </script>
+</body>
+</html>
