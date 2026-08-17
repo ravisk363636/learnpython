@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="refresh" content="{{ poll }}">
+  <title>Token {{ token.display_number }}</title>
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body>
+  <main class="wrap">
+    <div class="card" style="max-width:28rem;margin:3rem auto;text-align:center">
+      <p class="muted">{{ token.clinic.name }}</p>
+      <p>Your token</p>
+      <div class="token">{{ token.display_number }}</div>
+      <p>{{ token.doctor.display_name }}</p>
+      <p>Status: <strong>{{ token.get_status_display }}</strong></p>
+      {% if token.doctor.queue_paused %}<p class="paused">Doctor is paused{% if token.doctor.pause_reason %}: {{ token.doctor.pause_reason }}{% endif %}</p>{% endif %}
+      {% if token.status == "waiting" %}
+        <p>People ahead: {{ ahead }}</p>
+        <p>Estimated wait: about {{ eta }} minutes</p>
+      {% endif %}
+      <p class="muted">Keep this link. It only shows your token.</p>
+    </div>
+  </main>
+</body>
+</html>

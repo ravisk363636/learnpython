@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Setup · {{ clinic.name }}{% endblock %}
+{% block content %}
+<h1>Clinic setup</h1>
+<section class="card">
+  <h2>Clinic</h2>
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="form" value="clinic">
+    {{ form.as_p }}
+    <button type="submit">Save clinic</button>
+  </form>
+</section>
+<div class="row">
+  <section class="card col">
+    <h2>Doctors</h2>
+    <ul>{% for d in doctors %}<li>{{ d.display_name }} — {{ d.specialization }}</li>{% endfor %}</ul>
+    <form method="post" action="{% url 'clinics:add_doctor' %}">
+      {% csrf_token %}
+      {{ doctor_form.as_p }}
+      <button type="submit">Add doctor</button>
+    </form>
+  </section>
+  <section class="card col">
+    <h2>Rooms</h2>
+    <ul>{% for r in rooms %}<li>{{ r.name }} {% if r.doctor %}({{ r.doctor.display_name }}){% endif %}</li>{% endfor %}</ul>
+    <form method="post" action="{% url 'clinics:add_room' %}">
+      {% csrf_token %}
+      {{ room_form.as_p }}
+      <button type="submit">Add room</button>
+    </form>
+  </section>
+</div>
+<section class="card">
+  <h2>Working hours</h2>
+  <table>
+    <thead><tr><th>Who</th><th>Day</th><th>Hours</th><th>Slot</th></tr></thead>
+    <tbody>
+    {% for h in hours %}
+      <tr>
+        <td>{% if h.doctor %}{{ h.doctor.display_name }}{% else %}Clinic default{% endif %}</td>
+        <td>{{ h.weekday }}</td>
+        <td>{{ h.start_time }}–{{ h.end_time }}</td>
+        <td>{{ h.slot_minutes }} min</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <form method="post" action="{% url 'clinics:add_hours' %}">
+    {% csrf_token %}
+    {{ hours_form.as_p }}
+    <button type="submit">Add hours</button>
+  </form>
+</section>
+<section class="card">
+  <h2>Staff</h2>
+  <ul>{% for s in staff %}<li>{{ s.username }} — {{ s.get_role_display }}</li>{% endfor %}</ul>
+  <form method="post" action="{% url 'clinics:add_staff' %}">
+    {% csrf_token %}
+    {{ staff_form.as_p }}
+    <button type="submit">Create staff login</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Issue token{% endblock %}
+{% block content %}
+<div class="card" style="max-width:32rem">
+  <h1>Issue walk-in token</h1>
+  <p class="muted">Numbers are allocated per doctor (or clinic-wide if configured). Concurrent issues cannot share a number.</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Issue token</button>
+  </form>
+</div>
+{% endblock %}

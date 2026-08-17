@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Sign in · QueueLite{% endblock %}
+{% block content %}
+<div class="card login-box">
+  <h1>Staff sign in</h1>
+  <p class="muted">Reception, doctors, and clinic admins only.</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <label>Username {{ form.username }}</label>
+    <label>Password {{ form.password }}</label>
+    <p><button type="submit">Sign in</button></p>
+  </form>
+</div>
+{% endblock %}
