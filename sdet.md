@@ -1,432 +1,379 @@
-# From Java Selenium automation engineer to SDET
+# SDET 8-week plan (Java + Python + JavaScript)
 
-Java + Selenium is still a strong **enterprise baseline**. The SDET step-up is not “more page objects.” It is **software engineering for quality**: you design test systems, own pipelines, test APIs and services, and treat quality as a product of the delivery platform.
+**Goal:** In two months, study daily so you can **start SDET interviews** with a public GitHub project, a pipeline you own, and stories in Java, TypeScript, and Python—not only Selenium UI scripts.
 
-You do not need equal depth in Java, Python, and JavaScript/TypeScript on day one. You need **one primary language at SDET depth** (Java is a valid primary) and **working fluency in the other two**, because teams mix them.
+**Starting point assumed:** automation engineer with **Java + Selenium**. You will not master every tool. You will be interview-ready on a **coherent stack**.
 
-**Practical combination from a Java Selenium starting point:** Java depth + TypeScript Playwright fluency + Python pytest fluency.
+**Target combination:** Java depth (JUnit, REST Assured, Selenium kept) + TypeScript Playwright fluency + Python pytest fluency.
 
-Use **TypeScript, not only JavaScript**, for anything you will maintain: types catch bad fixtures, API payloads, and page objects.
-
----
-
-## What actually changes vs automation engineer
-
-| Automation engineer (typical) | SDET (what hiring managers mean) |
-|---|---|
-| Writes UI scripts | Designs a **test architecture** (layers, contracts, data, environments) |
-| Owns a suite | Owns **release gates** in CI/CD |
-| Debugs flaky locators | Debugs **systems** (logs, traces, contracts, infra) |
-| “QA tools” | Same languages, patterns, and reviews as developers |
-
-You already have the most common pairing in job posts: **Java + Selenium**. Keep it. Add depth around it, then add the layers that pay more: **API, pipelines, containers, system design**.
-
-Automation is the floor. UI scripts alone are not a premium skill.
+**Daily time:** **2–2.5 hours** on weekdays, **4 hours** Saturday, **3 hours** Sunday (~18 hours/week). If you only have 90 minutes/day, keep the weekday **hands-on** block and skip optional videos.
 
 ---
 
-## How the three languages split in SDET work
+## How to use this file
 
-| Language | Where it wins | Typical hiring signal |
+1. Follow **one week at a time**. Do not binge weeks 3–8 of docs on day 1.
+2. For every topic: **official docs → type the code yourself → commit**. Videos are for when docs are not enough.
+3. Saturday is **project + generative AI lab** (same topics, different method).
+4. Sunday is **review + 5 interview questions out loud**.
+5. By Sunday of week 8 you should be applying, not still collecting courses.
+
+**Repo to create on day 1:** `sdet-lab` with folders `java-api/`, `playwright-ts/`, `python-api/`, `.github/workflows/`. Everything you learn lands there.
+
+---
+
+## Consolidated syllabus (what interviews actually probe)
+
+| Pillar | Must be able to do | Defer until after you have offers |
 |---|---|---|
-| **Java** | Enterprise UI (Selenium), Spring services, REST Assured, banks/ERP | Strongest **Java + Selenium** pairing in many job posts |
-| **Python** | API, data, scripts, performance glue, ML/eval of AI products | Fast to write; strong in backend/data-heavy QA |
-| **JavaScript / TypeScript** | Frontend, Playwright, Cypress, Node APIs, GitHub Actions glue | Largest overlap with **new** web automation; TS preferred over plain JS |
+| **Coding** | Java collections/streams, TS async/types, Python pytest fixtures; small DSA (arrays, maps, strings) | Competitive programming |
+| **API** | REST Assured + httpx + Playwright API; status, JSONPath, auth headers | Full GraphQL/gRPC unless the JD requires it |
+| **UI** | Selenium 4 you already have; Playwright TS locators, fixtures, traces, POM | Cypress, Appium (learn if JD lists them) |
+| **CI** | GitHub Actions: install, run, upload artifacts, fail the job | Kubernetes, Jenkins plugins deep-dive |
+| **Env** | Docker + one Testcontainers example | Multi-cluster, service mesh |
+| **Quality extras** | One k6 or Locust script; axe in Playwright; OWASP Top 10 *literacy* | Full security engineer / perf engineer role |
+| **Design** | Test pyramid, flake policy, how you would test checkout/auth | Staff-level platform design |
+| **AI (SDET-relevant)** | RAG over *your* docs/tests; evals; agent + tools; MCP literacy | Training an LLM from scratch, GPU clusters |
 
 ---
 
-## Target stack
+## Canonical study materials (use these first)
 
-Use this as a resume and study map. You do not need every tool; you need **one coherent stack** you can explain end to end.
+Prefer **docs + TAU + official YouTube**. Use other YouTube only if the official source is missing a demo.
 
-### 1. Programming (this is the real SDET filter)
+### Hubs (video + structured courses)
 
-SDET interviews fail more often on **coding + design** than on “which locator strategy.”
+| Source | URL | Use for |
+|---|---|---|
+| Test Automation University (free) | https://testautomationu.applitools.com/ | Playwright, Selenium, API, GitHub Actions — search the catalog |
+| TAU: GitHub Actions for Testing | https://testautomationu.applitools.com/github-actions-for-testing/ | Week 2 CI |
+| Playwright docs (best written) | https://playwright.dev/docs/intro | Weeks 3–4 |
+| Playwright YouTube (Microsoft) | https://www.youtube.com/@Playwrightdev | Watch after reading the matching docs page |
+| Ministry of Testing | https://www.ministryoftesting.com/ | Articles, community, interview mindset |
+| GitHub Skills | https://skills.github.com/ | Git + Actions interactive |
+| Microsoft Learn — Playwright | https://learn.microsoft.com/en-us/training/modules/build-with-playwright/ | Extra TS/Playwright module |
 
-**Java**
+### Languages
 
-- Java 17+, collections, concurrency basics, streams, exceptions, generics
-- OOP + design patterns that show up in frameworks: builder, factory, strategy, facade
-- Clean code: SOLID, immutability, no god Page classes
-- Unit testing of your own framework: JUnit 5, AssertJ, Mockito
-- Maven/Gradle
+| Topic | Docs | Video / interactive |
+|---|---|---|
+| Java | https://dev.java/learn/ · https://junit.org/junit5/docs/current/user-guide/ · https://www.baeldung.com/ | Keep Selenium knowledge; deepen JUnit 5 on Baeldung |
+| TypeScript | https://www.typescriptlang.org/docs/handbook/intro.html · https://javascript.info/ | https://www.totaltypescript.com/tutorials (many free) |
+| Python | https://docs.python.org/3/tutorial/ · https://docs.pytest.org/ | pytest docs are the course |
+| Git | https://git-scm.com/book/en/v2 | https://learngitbranching.js.org/ |
+| HTTP | https://developer.mozilla.org/en-US/docs/Web/HTTP | — |
+| SQL | https://www.postgresql.org/docs/current/tutorial.html · https://mode.com/sql-tutorial/ | — |
 
-**Python**
+### Automation and quality engineering
 
-- 3.11+, typing (`list[str]`, Pydantic), virtualenv/uv/poetry
-- pytest, fixtures, parametrize
-- `httpx` / `requests`, dataclasses
-- asyncio at a reading level
+| Topic | Docs | Video |
+|---|---|---|
+| Selenium (keep sharp) | https://www.selenium.dev/documentation/ | TAU Selenium courses |
+| REST Assured | https://rest-assured.io/ · https://github.com/rest-assured/rest-assured/wiki/Usage | TAU API courses; optional playlist https://www.youtube.com/playlist?list=PLMer2TvhZIw-8KszaIZFsOrE8MEJXVYoY |
+| Playwright TS | https://playwright.dev/docs/writing-tests · https://playwright.dev/docs/best-practices · https://playwright.dev/docs/api-testing · https://playwright.dev/docs/ci | https://www.youtube.com/@Playwrightdev |
+| Playwright Java | https://playwright.dev/java/docs/intro | After TS is fluent |
+| Playwright Python | https://playwright.dev/python/docs/intro | Optional |
+| Docker | https://docs.docker.com/get-started/ | Official: https://www.youtube.com/@docker |
+| GitHub Actions | https://docs.github.com/en/actions · https://docs.github.com/en/actions/writing-workflows/quickstart | TAU Actions course |
+| Testcontainers | https://testcontainers.com/getting-started/ · https://java.testcontainers.org/ | Guides on testcontainers.com |
+| Allure | https://allurereport.org/docs/ | — |
+| k6 | https://grafana.com/docs/k6/latest/ | Grafana k6 channel / docs examples |
+| Locust | https://docs.locust.io/ | — |
+| Accessibility | https://playwright.dev/docs/accessibility-testing · https://www.w3.org/WAI/fundamentals/ | — |
+| OWASP | https://owasp.org/www-project-top-ten/ | — |
+| OpenTelemetry | https://opentelemetry.io/docs/ | Skim only in week 7 |
+| Pact / OpenAPI | https://docs.pact.io/ · https://learn.openapis.org/ | — |
+| WireMock | https://wiremock.org/docs/ | — |
+| Spring testing | https://spring.io/guides · https://docs.spring.io/spring-framework/reference/testing.html | If JD is Spring-heavy |
 
-**JavaScript / TypeScript**
+### Practice apps (always the same three)
 
-- ES2022+, **TypeScript** (strict), npm/pnpm
-- async/await, Promises, modules
-- Jest or Vitest, Playwright test runner
+- UI: https://the-internet.herokuapp.com/
+- API: https://restful-booker.herokuapp.com/ · https://jsonplaceholder.typicode.com/
+- OpenAPI: https://petstore.swagger.io/
+- Security playground (legal, local): https://owasp.org/www-project-juice-shop/
 
-Cross-language skills interviews actually test: data structures, HTTP, OOP vs composition, designing a small framework, reading someone else’s code.
+### Communities
 
-### 2. Test pyramid (stop living only in UI)
+- Playwright Discord: https://aka.ms/playwright/discord
+- Stack Overflow tags: `playwright`, `rest-assured`, `pytest`, `selenium`
 
-| Layer | Java | Python | JS/TS |
+---
+
+## Daily rhythm (repeat every weekday)
+
+| Minutes | Block | Rule |
+|---|---|---|
+| 15 | **Interview drill** | One coding puzzle *or* one “how would you test X” out loud |
+| 45–60 | **Input** | Docs first; one TAU/official video if stuck |
+| 60–90 | **Output** | Code in `sdet-lab`; tests must run |
+| 10 | **Log** | 3 bullets: learned / broke / tomorrow |
+
+**Do not** watch 2 hours of video with zero commits.
+
+---
+
+## Eight-week calendar
+
+Weekend AI labs are specified under [Generative AI track](#generative-ai-track-learn-the-same-syllabus-a-second-way). Do them **in addition** to the Saturday project hours (split 2h project / 2h AI, or 2.5 / 1.5).
+
+### Week 1 — Java as an SDET language + API pyramid base
+
+**Outcome:** Maven + JUnit 5 + REST Assured suite against Restful Booker (or JSONPlaceholder). No new UI framework yet.
+
+| Day | Study | Hands-on | Interview |
 |---|---|---|---|
-| Unit / component | JUnit 5, TestNG, PIT mutation testing | pytest, coverage.py, mutmut (optional) | Vitest or Jest, Testing Library, Stryker |
-| API / contract | REST Assured, Spring `WebTestClient` / `MockMvc`, Jackson, WireMock, Pact / Spring Cloud Contract | pytest + `httpx`, Pydantic, Schemathesis, Pact Python | Playwright `APIRequestContext`, supertest, Pact JS, Zod |
-| UI | Selenium 4 (W3C WebDriver), Playwright for Java | Selenium + pytest, Playwright for Python | **Playwright Test + TypeScript** (strongest for new work); Cypress in JS-first teams |
-| Mobile (if relevant) | Appium 2 | Appium 2 | Appium / WDIO; Playwright for mobile web |
+| Mon | https://martinfowler.com/articles/practical-test-pyramid.html · JUnit 5 user guide (annotations, assertions, parameterized) | Init `java-api/` Maven project; 5 JUnit tests of a small `String`/`List` util | Why API tests before UI? |
+| Tue | REST Assured wiki Usage · MDN HTTP methods/status | GET/POST Restful Booker; assert status + JSON | Idempotency: what is it? |
+| Wed | Auth: https://jwt.io/introduction · https://www.oauth.com/ (skim) | Booker auth token → authenticated call | Bearer vs Basic |
+| Thu | Baeldung: REST Assured serialization / POJOs | Map JSON to POJO; negative tests (400/401) | How do you test error contracts? |
+| Fri | OpenAPI: https://learn.openapis.org/ (1–2 pages) · Petstore | One test driven from an OpenAPI path | What belongs in a contract test? |
+| Sat | Refactor: config, env base URL, logging. Optional TAU API course chapters | README: how to run | — |
+| Sun | Review week 1 diffs | 5 LeetCode Easy (arrays/strings) in Java | Tell your pyramid story |
 
-Enterprise still runs Selenium. New greenfield and many “modern SDET” posts prefer **Playwright**. Learn Playwright without throwing Selenium away.
+**Videos:** TAU API automation (catalog search). Optional Rest Assured playlist only after you have 5 passing tests.
 
-Shared ideas (language-agnostic): OpenAPI as source of truth, consumer-driven contracts, idempotency, auth (OAuth2/JWT), event-driven waits (not `sleep`).
+### Week 2 — Git, Docker, GitHub Actions (pipeline you own)
 
-Patterns transfer between tools: page object / screenplay, fixture management, data builders, custom assertions.
+**Outcome:** Push `java-api` tests; PR workflow runs Maven tests and uploads surefire/Allure or XML.
 
-### 3. Backend and architecture literacy
+| Day | Study | Hands-on | Interview |
+|---|---|---|---|
+| Mon | Pro Git ch. 2–3 or Learn Git Branching | Branch/PR hygiene on `sdet-lab` | rebase vs merge |
+| Tue | Docker Get Started (modules 1–2) | Dockerfile that runs `mvn test` | Why Docker for tests? |
+| Wed | GHA quickstart + setup-java | Workflow on push/PR | How do you fail the build? |
+| Thu | TAU GitHub Actions for Testing ch. 1–2 | Cache Maven; artifacts | Secrets vs variables |
+| Fri | Allure docs (minimal) or JUnit XML only | Publish report artifact | Flake vs product bug |
+| Sat | Docker official intro video if needed | Same tests in container locally | — |
+| Sun | Write “CI quality gates” (smoke vs full) in README | 5 Java coding questions | Design: test a login API |
 
-Talk like you understand the app, not only the browser:
+**Videos:** TAU https://testautomationu.applitools.com/github-actions-for-testing/ · Docker YouTube @docker · GitHub Skills Actions course on https://skills.github.com/
 
-- REST, HTTP, auth (**OAuth2/OIDC, JWT**), idempotency, retries
-- **Microservices**: service boundaries, eventual consistency, test doubles vs real env
-- **Message queues** (Kafka/Rabbit) at “can I write a consumer test / wait for an event” level
-- **GraphQL** if the UI is GraphQL-backed
-- **Spring Boot** enough to read controllers, profiles, Testcontainers-style integration tests
+### Week 3 — TypeScript + Playwright core
 
-### 4. CI/CD and DevOps (this is the salary jump)
+**Outcome:** Playwright TS project; 8–12 tests on the-internet or Playwright’s own site; traces on failure.
 
-Pipeline ownership beats a third UI framework.
+| Day | Study | Hands-on | Interview |
+|---|---|---|---|
+| Mon | TS Handbook: types, interfaces, unions | `npx playwright init`; tsconfig strict | Why TypeScript for tests? |
+| Tue | javascript.info: promises/async (if rusty) | Convert one test to async/await cleanly | event loop in one sentence |
+| Wed | Playwright intro + writing tests | Locators: getByRole, getByLabel | Why not XPath-first? |
+| Thu | Best practices + auto-waiting | Delete `waitForTimeout`; use web-first asserts | What causes flakes? |
+| Fri | Trace viewer + UI mode | Fail a test on purpose; read the trace | How do you debug CI-only fails? |
+| Sat | @Playwrightdev videos matching this week’s pages | POM for 2 pages | — |
+| Sun | Compare Selenium vs Playwright (write 10 lines) | 5 TS type puzzles (Handbook exercises) | When keep Selenium? |
 
-- Git (branches, PRs, bisect, hooks)
-- **GitHub Actions** and/or **Jenkins** / GitLab CI
-- **Docker**: run tests in the same image as CI
-- Parallelism, sharding, retries with quarantine policy (not “retry until green”)
-- Test reporting: Allure, JUnit XML, Playwright traces
-- Secrets, environments, feature flags
+**Docs:** https://playwright.dev/docs/intro · https://playwright.dev/docs/writing-tests · https://playwright.dev/docs/best-practices · https://playwright.dev/docs/trace-viewer  
+**Video:** https://www.youtube.com/@Playwrightdev  
+**Course:** TAU Playwright (catalog) + https://learn.microsoft.com/en-us/training/modules/build-with-playwright/
 
-Language-specific packaging:
+### Week 4 — Playwright as a framework (API + UI + CI)
 
-- Java: Maven/Gradle cache, Surefire/Failsafe
-- Python: poetry/uv, pytest `-n` (pytest-xdist)
-- JS/TS: pnpm cache, Playwright browser cache, matrix shards
+**Outcome:** Same repo: UI + Playwright `APIRequestContext` setup; GHA from https://playwright.dev/docs/ci ; HTML report artifact.
 
-Kubernetes is useful **after** Docker + CI are solid, not before.
+| Day | Study | Hands-on | Interview |
+|---|---|---|---|
+| Mon | Fixtures, projects, parallelism | `storageState` or API login then UI | Test isolation |
+| Tue | API testing guide | Create resource via API, assert in UI | Test data strategy |
+| Wed | Network mocking (docs) | Mock one API for a UI test | When to mock vs real |
+| Thu | Accessibility testing page | axe in one spec | a11y in CI: what fails the build? |
+| Fri | Playwright CI page (copy, then understand) | GHA for Playwright + traces on failure | Sharding |
+| Sat | Stabilise flakes; tags `@smoke` | Smoke job vs full job | — |
+| Sun | README architecture diagram | 5 “explain this Playwright snippet” | Design: test a checkout |
 
-### 5. Cloud
+### Week 5 — Python pytest + same APIs
 
-One cloud is enough: **AWS** is the most common (S3 artifacts, IAM, ECS/EKS at a high level, CloudWatch). Azure if you target Microsoft shops.
+**Outcome:** `python-api/` with pytest + httpx covering the **same** Restful Booker cases as Java (proves you can switch languages).
 
-### 6. Observability (how SDETs debug now)
+| Day | Study | Hands-on | Interview |
+|---|---|---|---|
+| Mon | Python tutorial ch. 3–5, 9 (classes) | venv/uv; first pytest | Python vs Java for API tests |
+| Tue | pytest fixtures, parametrize, conftest | Parametrize status codes | fixture scope |
+| Wed | httpx docs | Rewrite Booker GET/POST | sync vs async httpx |
+| Thu | Pydantic | Validate response schema | contract vs schema |
+| Fri | pytest-xdist (optional) + coverage.py skim | Markers `smoke` | — |
+| Sat | Add Python job to GHA (`setup-python`) | All three folders in one pipeline | — |
+| Sun | Compare Java vs Python suite (table in README) | 5 Python list/dict exercises | When pick Python in a Java shop? |
 
-Flakes are often **not** locators. They are timing, data, downstream 5xx, or missing isolation.
+**Docs:** https://docs.python.org/3/tutorial/ · https://docs.pytest.org/ · https://www.python-httpx.org/ · https://docs.pydantic.dev/
 
-- Structured logs
-- **OpenTelemetry** / traces (Jaeger, Grafana Tempo)
-- Metrics: Prometheus + Grafana at a reading level
-- Tie a failed E2E to a **trace id**, not a screenshot only
+### Week 6 — Test infrastructure: Testcontainers, doubles, reports
 
-### 7. Quality beyond functional UI
+**Outcome:** One Testcontainers test (Postgres or WireMock) **or** WireMock without containers if Docker is heavy; Allure or Playwright report linked from README.
 
-- **Performance**: k6 (JS) or JMeter; Locust (Python); know p95 vs average
-- **Security testing literacy**: OWASP Top 10, authz vs authn, dependency scanning; not “become a pentester”
-- **Accessibility**: axe-core in the pipeline
-- **Chaos / resilience** (optional, senior): timeouts, retries, circuit breakers
+| Day | Study | Hands-on | Interview |
+|---|---|---|---|
+| Mon | Testcontainers getting started | Java JUnit + Postgres *or* WireMock | Why not a shared QA DB? |
+| Tue | WireMock docs | Stub Booker-like API; test against stub | Stub vs mock vs fake |
+| Wed | Pact *or* OpenAPI schemathesis skim | One consumer contract **or** one Schemathesis run | Consumer-driven contracts |
+| Thu | SQL tutorial (joins) | Assert DB row after API (if Testcontainers) | test data factories |
+| Fri | Flake policy write-up | Quarantine tag + owner in README | Retry: when is it a lie? |
+| Sat | Polish reports | Allure or keep Playwright HTML | — |
+| Sun | System design: “test a payments service” 1 page | 5 SQL questions | — |
 
-### 8. AI (trend, not a replacement for engineering)
+**Docs:** https://testcontainers.com/getting-started/ · https://wiremock.org/docs/ · https://docs.pact.io/ · https://schemathesis.readthedocs.io/
 
-The trend is **AI-assisted quality**, not “prompt until the suite exists”:
+### Week 7 — Performance literacy, security literacy, interview coding + design
 
-- Copilot/Cursor for scaffolding tests you still **review**
-- Self-healing locators (use carefully; they hide product bugs)
-- LLM-generated tests grounded in **your** repo, OpenAPI, and acceptance criteria
-- **Testing AI products**: evals, golden datasets, hallucination/regression of model output
-- MCP / agent workflows appear in some senior interviews; treat as **orchestration + judgment**, not a tool list to memorize
+**Outcome:** One k6 **or** Locust script against JSONPlaceholder; OWASP Top 10 notes; 30–45 min timed Java coding daily.
 
-Python still dominates **evals, datasets, pandas, pytest for LLM output**. TS/JS dominates **Playwright MCP / agent + browser**. Java dominates **enterprise frameworks** the agents must respect.
+| Day | Study | Hands-on | Interview |
+|---|---|---|---|
+| Mon | k6 docs intro **or** Locust quickstart | 50 VUs smoke; record p95 | latency vs throughput |
+| Tue | OWASP Top 10 (read summaries) | Checklist vs your Booker tests (authz) | IDOR in one sentence |
+| Wed | Playwright a11y recap | Fail CI on critical axe | — |
+| Thu | OpenTelemetry “what is a trace” (1 hour max) | Add trace-id note to README debug section | How do you debug microservices E2E? |
+| Fri | DSA: maps, two pointers, stacks | 4 timed Easy/Medium Java | Talk while coding |
+| Sat | Mock interview: 45 min coding + 30 min test design | Record yourself | — |
+| Sun | Selenium 4 refresh (Grid, waits) so you don’t rust | 10 Selenium vs Playwright comparison Qs | Legacy suite migration |
 
----
+**k6:** https://grafana.com/docs/k6/latest/  
+**Locust:** https://docs.locust.io/  
+**OTel:** https://opentelemetry.io/docs/  
+**AWS skim (optional):** https://skillbuilder.aws/ Cloud Practitioner free digital — only if JDs ask AWS.
 
-## Trends that should change how you study
+### Week 8 — Capstone, interviews, AI quality story
 
-1. **Automation is the floor.** UI scripts alone are not a premium skill.
-2. **Playwright + TypeScript** is the default for *new* web suites; Selenium remains huge in banks, ERP, older Java estates.
-3. **API-first and contract tests** beat a giant UI suite.
-4. **Shift-left**: SDETs pair on stories, review PRs, add tests next to production code.
-5. **Test as infrastructure**: environments via Testcontainers, ephemeral envs, not one shared QA box.
-6. **Quality gates in the pipeline**: coverage of *risk*, flake budgets, smoke vs full vs nightly.
-7. **System design for test platforms**: grid vs cloud browsers, artifact storage, reporting, data factories.
-8. **AI in the loop**, with humans owning strategy, domain, and “when not to trust the agent.”
+**Outcome:** Public repo README that a hiring manager can run in 10 minutes; 20 STAR stories; applications sent.
 
----
+| Day | Study | Hands-on | Interview |
+|---|---|---|---|
+| Mon | Capstone: README, architecture, how to run all suites | Fix CI until green | — |
+| Tue | 15 behavioral STAR (conflict, flake, missed bug, pipeline) | Write them down | — |
+| Wed | 15 technical Q: HTTP, waits, pyramid, Docker, GHA | Answer without notes | — |
+| Thu | Live coding practice | 2 Medium Java + 1 pytest fixture design | — |
+| Fri | Apply to 5–10 roles that match Java SDET + Playwright | Tailor README link | — |
+| Sat | **AI capstone** (see below): RAG over your own `sdet-lab` + this file | Demo in README | How do you test an LLM feature? |
+| Sun | Rest + light review | Second mock interview | Keep applying |
 
-## Three canonical stacks (master one, speak the others)
-
-Pick **one** as the repo you show; keep the others at “I can contribute in a week.”
-
-**A. Enterprise Java SDET (current base)**  
-Java 17, JUnit 5, Selenium 4, REST Assured, Testcontainers, Maven, Jenkins/GHA, Allure, Docker.  
-*Add:* Playwright Java or a small TS Playwright sidecar.
-
-**B. Modern web SDET (highest overlap with new postings)**  
-TypeScript, Playwright Test, API tests in the same project, Zod, GitHub Actions, Docker, traces on failure, axe.  
-*Add:* Node/Express or Next.js enough to read the app.
-
-**C. API / data / platform SDET**  
-Python, pytest, httpx, Pydantic, Testcontainers, SQL, Locust or k6, GHA.  
-*Add:* contracts + Kafka/Redis at “can test it” level.
-
-A strong SDET is **A + B**, with Python for C-shaped work (data setup, reports, AI evals, glue).
-
-**Resume-shaped stack (Java SDET with the other two languages):**
-
-- **Core:** Java 17+, Maven/Gradle, Git, JUnit 5 / TestNG, Selenium 4, REST Assured, Jackson, Allure
-- **Modern add:** Playwright (Java or TS), Testcontainers, WireMock, Awaitility
-- **JS/TS:** Playwright Test, Zod, GitHub Actions
-- **Python:** pytest, httpx, Pydantic
-- **Delivery:** GitHub Actions or Jenkins, Docker, parallel CI, Allure + traces
-- **Data/env:** SQL, Faker / factory pattern, test users via API not UI
-- **Cloud/obs (one each):** AWS basics, OpenTelemetry or at least CloudWatch/ELK reading
-
-That combination reads as SDET. “Selenium + Cucumber + Jenkins job I didn’t write” still reads as automation engineer.
-
-Example resume line: *SDET-style automation across Java (Selenium, REST Assured, JUnit), TypeScript (Playwright), and Python (pytest, API/data), with Dockerized CI, contract-aware API tests, and pipeline quality gates.*
-
----
-
-## Shared engineering layer (this is the SDET part)
-
-Regardless of language:
-
-- Test pyramid and risk-based gates
-- Page objects / screenplay / fixtures — patterns transfer
-- CI as the product: smoke / full / nightly
-- Flake policy, quarantine, owners
-- System design: how you would test checkout, auth, or a worker pipeline
-- Shift-left: PR reviews, tests next to production code
-
-You do not become an SDET by collecting tools. You become one when you can **design how quality is built into the software and the pipeline**, using Java/Selenium as one layer—not the whole job.
+**You are ready to attend interviews if:** CI is green, you can explain every folder, you can code a REST Assured or Playwright test on a whiteboard, and you have a 5-minute “how I would test X” structure.
 
 ---
 
-## How to sequence the move (high ROI order)
+## Generative AI track (learn the same syllabus a second way)
 
-1. **Deepen Java** so you look like an engineer (framework design, API tests, CI you own).
-2. **API automation + contract thinking** on a real service (not another login UI).
-3. **CI you own**: PR smoke, nightly full, artifacts, fail-the-build policy.
-4. **Dockerize** the suite; kill “works on my machine.”
-5. **TypeScript + Playwright** on a small app (UI + API in one repo).
-6. **Python + pytest + httpx** against a real API; add one Locust or k6 scenario.
-7. **System design**: how you would test a checkout, payments, or auth service (layers, data, risks, gates).
-8. **One cloud + traces** so you can debug a failure without guessing.
-9. Docker + one pipeline that runs **two** language suites (e.g. Java API + TS UI).
-10. AI tools last, on top of that foundation.
+Use AI as a **tutor, indexer, and agent with tools**—not as a replacement for running tests. Interviewers will ask what you **verified**.
 
-**Portfolio that converts:** a public repo with a small app (or Testcontainers against a real API), pyramid of tests, CI badge, Allure/Playwright report, README that explains *why* tests live where they live. Interviewers look for that more than a 400-test Selenium dump.
+### Mental model (learn this once, week 1 Sunday + week 8)
+
+| Approach | What it is | When SDETs use it | What it is *not* |
+|---|---|---|---|
+| **Prompting** | You + a chat model | Explain a stack trace, draft a test, quiz you | Source of truth |
+| **RAG** | Retrieve chunks from *your* docs/code, then generate | “What does our framework do for retries?” | Training a new model |
+| **Fine-tuning / training** | Change model weights on a dataset | Rare for personal SDET study; companies may fine-tune on internal bugs | You will **not** train GPT from scratch in 8 weeks |
+| **Agents** | Model + **tools** (run tests, open browser, grep repo) in a loop | Generate then *execute* tests; triage failures | Magic autonomy without evals |
+| **MCP** | Standard way to expose tools (e.g. Playwright) to an LLM client | Cursor/Claude + Playwright MCP | A replacement for Playwright Test |
+| **Evals** | Dataset of Q/A or “expected test behavior”; score the model | **This is the SDET skill for AI products** | Skipping assertions because “the model said so” |
+
+**Do not spend weeks on CUDA or pretraining.** Spend hours on **RAG + evals + one agent with tools**. That is what SDET JDs mean by AI.
+
+### Official learning path for AI (evenings / Saturdays)
+
+Complete in this order (short courses, not a second master’s degree):
+
+| Order | Resource | URL | Time |
+|---|---|---|---|
+| 1 | RAG concept + Chat with your data | https://www.deeplearning.ai/short-courses/langchain-chat-with-your-data/ | ~1 hour |
+| 2 | Hugging Face Agents course (free) | https://huggingface.co/learn/agents-course | sample 2–4 units |
+| 3 | LangChain Academy / LangGraph RAG agent | https://academy.langchain.com/ · https://docs.langchain.com/oss/python/langgraph/agentic-rag | 1 Saturday |
+| 4 | Evaluate RAG | https://docs.langchain.com/langsmith/evaluate-rag-tutorial | 1 evening |
+| 5 | OpenAI evals | https://platform.openai.com/docs/guides/evals | skim + one eval |
+| 6 | promptfoo (test LLM output like tests) | https://www.promptfoo.dev/docs/intro/ | 1 evening |
+| 7 | MCP spec (literacy) | https://modelcontextprotocol.io/ | 45 min |
+| 8 | Playwright MCP | https://github.com/microsoft/playwright-mcp | week 8 |
+| 9 | Fine-tuning *literacy* only | https://huggingface.co/learn/nlp-course (transformer intuition) · OpenAI fine-tuning guide if you use their API | optional week 8 |
+| 10 | Neural net intuition (optional) | https://www.3blue1brown.com/topics/neural-networks | Sunday background |
+
+**NLP course** is for vocabulary (embeddings, tokens). Stop before training large models.
+
+### Saturday AI labs (parallel to weeks 1–8)
+
+Each lab is **the week’s topic**, learned via AI. Still commit code you ran yourself.
+
+| Week | AI lab (90–120 min) |
+|---|---|
+| 1 | **Tutor mode:** Paste REST Assured wiki section; ask the model to quiz you; then write tests **without** pasting the solution. Rule: if you cannot explain a line, delete it. |
+| 2 | **RAG v0:** Put Docker + GHA docs PDFs/markdown in a folder. Use a simple RAG notebook (DeepLearning.AI course pattern: chunk → embed → retrieve → answer). Ask “how do I cache Maven in GHA?” and **verify against official docs**. |
+| 3 | **Grounded Playwright tutor:** Index https://playwright.dev/docs/best-practices (save HTML/MD). Refuse answers that are not in retrieved chunks (prompt: “only use context”). |
+| 4 | **Agent with tools (narrow):** Script: LLM proposes a Playwright test → you or a tool **runs** `npx playwright test` → paste failure back. Loop until green. Log every tool call. This *is* an agent; keep max 8 steps. |
+| 5 | **Pytest generator + eval:** Generate 10 httpx tests; run pytest; measure how many passed without edits. That number is your **eval**. Improve the prompt (not the model). |
+| 6 | **Failure-triage agent:** Tool 1: read surefire/Playwright JSON report. Tool 2: grep source. Output: flake vs product vs env. You label 10 failures as ground truth (eval set). |
+| 7 | **promptfoo or OpenAI evals:** 15 questions: “p95 vs average”, “when to mock”. Score the tutor. |
+| 8 | **Capstone:** (1) RAG over `sdet.md` + your README. (2) Playwright MCP in Cursor: explore the-internet, then **convert** exploration into committed tests. (3) One-page “How I would test a RAG chatbot” (retrieval metrics, groundedness, jailbreak/refusal, latency, eval dataset). |
+
+### How to build a tiny RAG (enough to talk in interviews)
+
+1. Collect files: this `sdet.md`, Playwright best-practices, your test `README`.
+2. Split into chunks (headings / 500–1000 tokens).
+3. Embed with a hosted API or a local sentence-transformers model ([Hugging Face sentence-transformers](https://huggingface.co/sentence-transformers)).
+4. Store vectors (Chroma / FAISS — follow the DeepLearning.AI notebook).
+5. At query time: retrieve top-k → prompt: answer only from chunks + cite file names.
+6. **Eval:** 10 questions with known answers; track faithfulness (did it invent a Playwright API?).
+
+That is RAG. **Training** would mean updating model weights; skip it unless a job is ML-platform SDET.
+
+### How to create an agent (enough to talk in interviews)
+
+An agent is a loop:
+
+1. Model chooses a **tool** (run tests, read file, browser snapshot).
+2. Your code **executes** the tool (never let it run unbounded shell on a shared machine).
+3. Observation goes back to the model.
+4. Stop on success, max steps, or human approval.
+
+Implement with LangGraph tutorial above **or** a 40-line Python loop. Expose Playwright via [playwright-mcp](https://github.com/microsoft/playwright-mcp) instead of inventing browser tools.
+
+Patterns worth naming in interviews (from real SDET usage):
+
+- Generate tests from OpenAPI / tickets, then **run** them
+- Triage CI failures from reports + traces
+- Exploratory agent → human turns session into regression tests
+
+Patterns to distrust: self-healing locators that hide product bugs; agents that click production.
+
+### Alternative ways to study each week (when you are stuck)
+
+| If you… | Do this instead of more video |
+|---|---|
+| Learn by teaching | Feynman: 5-minute voice note; RAG tutor asks follow-ups |
+| Learn by testing | Write the test first; use AI only for locator ideas; you decide assertions |
+| Learn by reading | Official docs only; AI summarizes *after* you read |
+| Learn by building | AI as pair programmer in Cursor with “do not write tests I didn’t ask for” |
+| Learn visually | Playwright trace + @Playwrightdev ; 3Blue1Brown only for ML vocab |
+
+### Interview answers for AI (memorize the shape)
+
+- **RAG vs fine-tune:** RAG when knowledge changes (docs, tests); fine-tune when style/format must change and you have a clean dataset and evals.
+- **How do you test a chatbot?** Golden questions, retrieval hit-rate, groundedness/faithfulness, toxicity/safety, latency, regression evals in CI (promptfoo).
+- **What is an agent?** LLM + tools + stop conditions + logging; you test tools and the loop, not only the prose.
+- **MCP?** Protocol so IDEs/models can call tools like Playwright consistently.
 
 ---
 
-## Systematic learning path (docs first)
+## Interview pack (start using from week 2)
 
-Use **official docs first**, then one structured course track, then a **single GitHub project** that ties the three languages together. Paid Udemy courses go stale; docs and TAU stay closer to the tools.
+**Coding:** Java Easy/Medium on arrays, strings, HashMap, two pointers (30 min, talk aloud).  
+**Automation live:** “Write a REST Assured GET + POST” or “Playwright login with getByRole.”  
+**Design:** Login, checkout, file upload, webhook, flaky suite, CI strategy.  
+**Behavioral:** flake you fixed, bug automation missed, disagreement with a developer, time you stopped a release.
 
-How to study (so this does not become 40 open tabs):
-
-1. One **primary language week** at a time (Java already known → TS next → Python).
-2. Every topic: **docs tutorial → 20–40 lines in your repo → commit**.
-3. Skip random YouTube playlists until you have read the official “intro + best practices” pages.
-4. Capstone: one repo with **Java API tests + TypeScript Playwright UI + Python pytest API/data**, Docker, GitHub Actions.
-
-Hubs that organize many free courses:
-
-- [Test Automation University](https://testautomationu.applitools.com/) — Selenium, Playwright, API, CI (free)
-- [Ministry of Testing](https://www.ministryoftesting.com/) — community, articles, learning paths
-- [QA to SDET roadmap (2026 overview)](https://qaskills.sh/blog/qa-to-sdet-roadmap-2026) — sequencing, not a substitute for docs
-
-### Phase 0 — Testing as engineering (1–2 days)
-
-| Topic | Learn here |
-|---|---|
-| Test pyramid | [The Practical Test Pyramid (Martin Fowler)](https://martinfowler.com/articles/practical-test-pyramid.html) |
-| Testing trophy | [The testing trophy and testing classifications](https://kentcdodds.com/blog/the-testing-trophy-and-testing-classifications) |
-| Arrange-Act-Assert | TAU intro courses on [Test Automation University](https://testautomationu.applitools.com/) |
-
-**Done when:** you can explain why a login UI test is the wrong *first* test for a checkout service.
-
-### Phase 1 — Languages
-
-#### Java (deepen, don’t restart)
-
-| Topic | Link |
-|---|---|
-| Official learn track | [dev.java/learn](https://dev.java/learn/) |
-| Language tutorials | [Oracle Java Tutorials](https://docs.oracle.com/javase/tutorial/) |
-| Practical articles | [Baeldung](https://www.baeldung.com/) (JUnit 5, REST Assured, Testcontainers) |
-| JUnit 5 | [JUnit 5 User Guide](https://junit.org/junit5/docs/current/user-guide/) |
-| AssertJ | [AssertJ docs](https://assertj.github.io/doc/) |
-| Mockito | [Mockito docs](https://site.mockito.org/) |
-| Maven | [Maven Getting Started](https://maven.apache.org/guides/getting-started/) |
-| Gradle | [Gradle Getting Started](https://docs.gradle.org/current/userguide/getting_started.html) |
-
-#### JavaScript then TypeScript
-
-| Topic | Link |
-|---|---|
-| JS in order | [javascript.info](https://javascript.info/) |
-| Browser/JS reference | [MDN JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) |
-| TypeScript Handbook | [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html) |
-| TS exercises | [Total TypeScript tutorials](https://www.totaltypescript.com/tutorials) (many free) |
-| Node packages | [npm docs](https://docs.npmjs.com/) |
-
-#### Python
-
-| Topic | Link |
-|---|---|
-| Official tutorial | [Python Tutorial](https://docs.python.org/3/tutorial/) |
-| Typing | [typing docs](https://docs.python.org/3/library/typing.html) |
-| pytest | [pytest docs](https://docs.pytest.org/) |
-| HTTP client | [httpx docs](https://www.python-httpx.org/) |
-| Data validation | [Pydantic](https://docs.pydantic.dev/) |
-| Packaging | [pip](https://pip.pypa.io/en/stable/), [uv](https://docs.astral.sh/uv/), [Poetry](https://python-poetry.org/docs/) |
-
-**Done when:** you can write JUnit tests, a TS function with types, and a pytest parametrize test without copying.
-
-### Phase 2 — Git, HTTP, SQL
-
-| Topic | Link |
-|---|---|
-| Git | [Pro Git book](https://git-scm.com/book/en/v2) · [Learn Git Branching](https://learngitbranching.js.org/) |
-| HTTP | [MDN HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP) |
-| OpenAPI | [Learn OpenAPI](https://learn.openapis.org/) |
-| SQL | [PostgreSQL tutorial](https://www.postgresql.org/docs/current/tutorial.html) · [Mode SQL tutorial](https://mode.com/sql-tutorial/) |
-| Auth | [OAuth 2.0](https://www.oauth.com/) · [JWT introduction](https://jwt.io/introduction) |
-
-### Phase 3 — UI automation (Selenium stay + Playwright add)
-
-#### Selenium (Java / Python / JS)
-
-| Topic | Link |
-|---|---|
-| Official docs (all languages) | [Selenium Documentation](https://www.selenium.dev/documentation/) |
-| Getting started | [Using Selenium](https://www.selenium.dev/documentation/webdriver/getting_started/using_selenium/) |
-| Grid | [Selenium Grid](https://www.selenium.dev/documentation/grid/) |
-| Free courses | [TAU](https://testautomationu.applitools.com/) |
-
-#### Playwright
-
-| Language | Intro | Follow-on |
-|---|---|---|
-| **TypeScript** (priority) | [Playwright intro](https://playwright.dev/docs/intro) | [Writing tests](https://playwright.dev/docs/writing-tests) · [Best practices](https://playwright.dev/docs/best-practices) · [Trace viewer](https://playwright.dev/docs/trace-viewer) · [API testing](https://playwright.dev/docs/api-testing) · [CI](https://playwright.dev/docs/ci) |
-| **Java** | [Playwright for Java](https://playwright.dev/java/docs/intro) | Same topics in the Java docs tree |
-| **Python** | [Playwright for Python](https://playwright.dev/python/docs/intro) | Same |
-
-Microsoft videos: [Playwright YouTube](https://www.youtube.com/@Playwrightdev).
-
-Cypress only if the job is Cypress-heavy: [Cypress docs](https://docs.cypress.io/).
-
-**Done when:** a Playwright TS suite on a public demo with traces on failure + GitHub Actions from the [CI page](https://playwright.dev/docs/ci).
-
-### Phase 4 — API, contracts, test doubles
-
-| Topic | Link |
-|---|---|
-| REST Assured (Java) | [rest-assured.io](https://rest-assured.io/) · [Usage wiki](https://github.com/rest-assured/rest-assured/wiki/Usage) |
-| Spring HTTP tests | [Spring Testing](https://docs.spring.io/spring-framework/reference/testing.html) · [Spring Guides](https://spring.io/guides) |
-| Python HTTP + pytest | [httpx](https://www.python-httpx.org/) + [pytest](https://docs.pytest.org/) |
-| TS API in Playwright | [Playwright API testing](https://playwright.dev/docs/api-testing) |
-| OpenAPI | [Learn OpenAPI](https://learn.openapis.org/) · [Swagger Editor](https://editor.swagger.io/) |
-| Consumer-driven contracts | [Pact docs](https://docs.pact.io/) |
-| Mocks (Java) | [WireMock](https://wiremock.org/docs/) |
-| Mocks (Node) | [MSW](https://mswjs.io/docs/) |
-| Schema-based API tests | [Schemathesis](https://schemathesis.readthedocs.io/) (Python) |
-
-**Done when:** tests hit a real API (or WireMock), assert JSON, and one contract or OpenAPI-generated check exists.
-
-### Phase 5 — Docker + Testcontainers
-
-| Topic | Link |
-|---|---|
-| Docker | [Docker Get Started](https://docs.docker.com/get-started/) · [Dockerfile reference](https://docs.docker.com/reference/dockerfile/) |
-| Testcontainers overview | [Getting started](https://testcontainers.com/getting-started/) |
-| Java | [Testcontainers Java](https://java.testcontainers.org/) · [Lifecycle guide](https://testcontainers.com/guides/testcontainers-container-lifecycle/) |
-| Python | [testcontainers-python](https://testcontainers-python.readthedocs.io/) |
-| Node | [Testcontainers Node](https://node.testcontainers.org/) |
-
-**Done when:** a test starts Postgres (or WireMock) in Docker and the suite is reproducible on a clean machine.
-
-### Phase 6 — CI/CD
-
-| Topic | Link |
-|---|---|
-| GitHub Actions | [Actions docs](https://docs.github.com/en/actions) · [Quickstart](https://docs.github.com/en/actions/writing-workflows/quickstart) |
-| Playwright on GHA | [Playwright CI](https://playwright.dev/docs/ci) |
-| Jenkins | [Jenkins User Handbook](https://www.jenkins.io/doc/) |
-| Reporting | [Allure Report](https://allurereport.org/docs/) |
-| Java on GHA | [setup-java](https://github.com/actions/setup-java) |
-| Python on GHA | [setup-python](https://github.com/actions/setup-python) |
-
-**Done when:** PR runs smoke tests; main runs more; reports/traces upload as artifacts; a red test fails the job.
-
-### Phase 7 — Performance, a11y, security literacy, observability
-
-| Topic | Link |
-|---|---|
-| k6 (JS) | [Grafana k6 docs](https://grafana.com/docs/k6/latest/) |
-| Locust (Python) | [Locust docs](https://docs.locust.io/) |
-| JMeter | [JMeter User Manual](https://jmeter.apache.org/usermanual/index.html) |
-| Accessibility | [WAI fundamentals](https://www.w3.org/WAI/fundamentals/) · [axe-core](https://github.com/dequelabs/axe-core) · [Playwright accessibility testing](https://playwright.dev/docs/accessibility-testing) |
-| OWASP Top 10 | [OWASP Top 10](https://owasp.org/www-project-top-ten/) |
-| ZAP | [ZAP docs](https://www.zaproxy.org/docs/) |
-| OpenTelemetry | [OTel docs](https://opentelemetry.io/docs/) · [Java](https://opentelemetry.io/docs/languages/java/) · [JS](https://opentelemetry.io/docs/languages/js/) · [Python](https://opentelemetry.io/docs/languages/python/) |
-| Cloud (pick AWS) | [AWS Skill Builder](https://skillbuilder.aws/) |
-| Mobile when needed | [Appium docs](https://appium.io/docs/en/latest/) |
-
-### Phase 8 — System design and AI-assisted testing (after the foundation)
-
-| Topic | Link |
-|---|---|
-| Test architecture | Fowler pyramid (Phase 0) + your own writeup of “how I would test X” |
-| Playwright MCP | [playwright-mcp](https://github.com/microsoft/playwright-mcp) · [playwright.dev](https://playwright.dev) |
-| Model Context Protocol | [MCP specification](https://modelcontextprotocol.io/) |
-| Testing ML/LLM systems | [OpenAI evals](https://platform.openai.com/docs/guides/evals) · [promptfoo](https://www.promptfoo.dev/docs/intro/) |
-
-Do this **last**. Interviews still fail people who cannot design an API suite or a pipeline.
+Apply from **Friday of week 8**; if CI and README are ready earlier, apply from week 7.
 
 ---
 
-## Suggested calendar (same stack, three languages)
+## What not to do in two months
 
-| Block | Focus | Main links |
-|---|---|---|
-| 1 | Java JUnit + REST Assured + Maven | JUnit 5, REST Assured wiki, Baeldung |
-| 2 | GitHub Actions + Docker for that suite | GHA quickstart, Docker get started |
-| 3 | TypeScript Handbook + Playwright intro → best practices → CI | TS Handbook, playwright.dev |
-| 4 | Python tutorial + pytest + httpx against the same API | Python tutorial, pytest, httpx |
-| 5 | Testcontainers in **one** language | Testcontainers Java or Python |
-| 6 | k6 or Locust + axe on the Playwright suite | k6, Playwright a11y |
-| 7 | Pact or OpenAPI checks + Allure | Pact, OpenAPI learn, Allure |
-| 8 | Capstone README: pyramid, gates, how to run locally/CI | your repo |
-
----
-
-## Practice apps
-
-- [The Internet (Heroku)](https://the-internet.herokuapp.com/) — classic UI playground
-- [Restful Booker](https://restful-booker.herokuapp.com/) — API
-- [JSONPlaceholder](https://jsonplaceholder.typicode.com/) — fake REST
-- [Swagger Petstore](https://petstore.swagger.io/) — OpenAPI
-- [OWASP Juice Shop](https://owasp.org/www-project-juice-shop/) — security + e2e (use legally, locally)
+- Do not start Cypress, Appium, Kafka, and K8s in parallel.
+- Do not collect 15 Udemy courses; TAU + official docs + one repo.
+- Do not train an LLM. Learn RAG, evals, and one agent.
+- Do not skip CI. A local-only suite is still an automation-engineer portfolio.
 
 ---
 
 ## Communities
 
-- [Ministry of Testing](https://www.ministryoftesting.com/)
-- [Test Automation University](https://testautomationu.applitools.com/)
-- [Playwright Discord](https://aka.ms/playwright/discord) (linked from [playwright.dev](https://playwright.dev))
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/selenium) — tags: `selenium`, `playwright`, `pytest`, `rest-assured`
+- https://www.ministryoftesting.com/
+- https://testautomationu.applitools.com/
+- https://aka.ms/playwright/discord
 
-Prefer **one question after you have a failing test and a stack trace**, not “how do I become SDET.”
-
----
-
-**Rule of thumb:** if a site is not in this list, use it only as a supplement. The systematic path is **Handbook/docs → TAU if you want video → your repo → CI**. That combination is what reads as SDET; a folder of unfinished courses does not.
-
-Do not try to become a 10/10 in all three languages at once. **Java depth + TS Playwright fluency + Python pytest fluency** is the marketable combination from a Java Selenium starting point.
+Ask questions with a failing test and a stack trace, not “how do I become SDET.”
