@@ -1,12 +1,12 @@
 # sdet-lab
 
-Hands-on repo for the 8-week plan in [`sdet.md`](../sdet.md). Study daily; every topic should land as a commit here.
+Hands-on repo for the 12-week (3-month) plan in [`sdet.md`](../sdet.md). Study daily; every topic should land as a commit here.
 
-| Folder | Plan week | Stack |
+| Folder | Plan weeks | Stack |
 |---|---|---|
-| `java-api/` | 1–2 | JUnit 5 + REST Assured vs JSONPlaceholder |
-| `python-api/` | 5 | pytest + httpx vs the same API |
-| `playwright-ts/` | 3–4 | Scaffold only until you start Playwright |
+| `java-api/` | 1–4 | JUnit 5 + REST Assured vs JSONPlaceholder |
+| `playwright-ts/` | 5–7 | TypeScript Playwright (init in week 5) |
+| `python-api/` | 8 | pytest + httpx vs the same API |
 
 CI: [`.github/workflows/sdet-lab.yml`](../.github/workflows/sdet-lab.yml) runs Java and Python on each push.
 
@@ -31,6 +31,6 @@ pip install -r requirements.txt
 pytest
 ```
 
-**Playwright (week 3)**
+**Playwright (week 5)**
 
 Follow `playwright-ts/README.md`.

@@ -1,8 +1,8 @@
-# playwright-ts (week 3)
+# playwright-ts (weeks 5–7)
 
-Do not skip Java weeks 1–2 for this folder.
+Finish Java months 1 (weeks 1–4) before living in this folder.
 
-When you reach week 3:
+When you reach **week 5 Friday**:
 
 ```bash
 cd playwright-ts
@@ -16,4 +16,4 @@ Then work through:
 - https://playwright.dev/docs/best-practices
 - https://playwright.dev/docs/ci
 
-Use https://the-internet.herokuapp.com/ as the first UI target. Add the GitHub Actions job from the Playwright CI docs in week 4.
+Use https://the-internet.herokuapp.com/ as the first UI target. Add the GitHub Actions job from the Playwright CI docs in **week 7**.
