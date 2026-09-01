@@ -2,6 +2,8 @@
 
 Hands-on repo for the 12-week (3-month) plan in [`sdet.md`](../sdet.md). Study daily; every topic should land as a commit here.
 
+**Each morning:** open [`daily-links.md`](daily-links.md) (docs + YouTube/TAU + exact lab task).
+
 | Folder | Plan weeks | Stack |
 |---|---|---|
 | `java-api/` | 1–4 | JUnit 5 + REST Assured vs JSONPlaceholder |

@@ -26,6 +26,8 @@ Three months is the same syllabus as the old two-month crunch, **spread so each 
 4. Sunday is **review + 5 interview questions out loud**.
 5. By **Friday of week 12** you should be applying. Light applications can start in week 11 if CI and README are already green.
 
+**Day-by-day links (docs + video + lab task):** [`sdet-lab/daily-links.md`](sdet-lab/daily-links.md). Open that file every morning.
+
 **Lab repo (day 1 is done for you):** [`sdet-lab/`](sdet-lab/README.md) — `java-api/`, `python-api/`, `playwright-ts/`. CI is [`.github/workflows/sdet-lab.yml`](.github/workflows/sdet-lab.yml). Commit new tests there as you study.
 
 ---
@@ -113,7 +115,7 @@ Prefer **docs + TAU + official YouTube**. Use other YouTube only if the official
 | Minutes | Block | Rule |
 |---|---|---|
 | 15 | **Interview drill** | One coding puzzle *or* one “how would you test X” out loud |
-| 45–60 | **Input** | Docs first; one TAU/official video if stuck |
+| 45–60 | **Input** | Docs + one video from [`sdet-lab/daily-links.md`](sdet-lab/daily-links.md) |
 | 60–90 | **Output** | Code in `sdet-lab`; tests must run |
 | 10 | **Log** | 3 bullets: learned / broke / tomorrow |
 
