@@ -1,0 +1,45 @@
+name: sdet-lab
+
+on:
+  push:
+    paths:
+      - "sdet-lab/**"
+      - ".github/workflows/sdet-lab.yml"
+  pull_request:
+    paths:
+      - "sdet-lab/**"
+      - ".github/workflows/sdet-lab.yml"
+
+jobs:
+  java-api:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sdet-lab/java-api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+      - name: Run JUnit and REST Assured tests
+        run: mvn -B test
+
+  python-api:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sdet-lab/python-api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: sdet-lab/python-api/requirements.txt
+      - name: Install and run pytest
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pytest

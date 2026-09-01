@@ -18,7 +18,7 @@
 4. Sunday is **review + 5 interview questions out loud**.
 5. By Sunday of week 8 you should be applying, not still collecting courses.
 
-**Repo to create on day 1:** `sdet-lab` with folders `java-api/`, `playwright-ts/`, `python-api/`, `.github/workflows/`. Everything you learn lands there.
+**Lab repo (day 1 is done for you):** [`sdet-lab/`](sdet-lab/README.md) — `java-api/`, `python-api/`, `playwright-ts/`. CI is [`.github/workflows/sdet-lab.yml`](.github/workflows/sdet-lab.yml). Commit new tests there as you study.
 
 ---
 
