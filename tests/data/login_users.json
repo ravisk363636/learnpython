@@ -1,0 +1,18 @@
+{
+  "valid": {
+    "username": "tomsmith",
+    "password": "SuperSecretPassword!"
+  },
+  "invalid": [
+    {
+      "username": "tomsmith",
+      "password": "wrong-password",
+      "expected_flash": "Your password is invalid!"
+    },
+    {
+      "username": "wrong-user",
+      "password": "SuperSecretPassword!",
+      "expected_flash": "Your username is invalid!"
+    }
+  ]
+}

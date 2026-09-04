@@ -1,0 +1,55 @@
+name: UI Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  selenium:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+
+      - name: Lint
+        run: |
+          ruff check src tests
+          ruff format --check src tests
+
+      - name: Run smoke tests (headless Chrome)
+        env:
+          HEADLESS: "true"
+          BROWSER: chrome
+          BASE_URL: https://the-internet.herokuapp.com
+        run: pytest tests -m smoke --alluredir=reports/allure-results
+
+      - name: Run full suite
+        env:
+          HEADLESS: "true"
+          BROWSER: chrome
+        run: pytest tests --reruns 1 --alluredir=reports/allure-results
+
+      - name: Upload HTML report and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-test-artifacts
+          path: |
+            reports/
+            screenshots/
+            logs/
+          if-no-files-found: ignore
