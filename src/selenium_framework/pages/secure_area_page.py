@@ -8,7 +8,7 @@ class SecureAreaPage(BasePage):
 
     FLASH = (By.ID, "flash")
     HEADING = (By.TAG_NAME, "h2")
-    LOGOUT = (By.CSS_SELECTOR, "a.button.secondary")
+    LOGOUT = (By.CSS_SELECTOR, "a[href='/logout']")
 
     def flash_message(self) -> str:
         return self.get_text(self.FLASH)
@@ -17,4 +17,5 @@ class SecureAreaPage(BasePage):
         return self.get_text(self.HEADING)
 
     def logout(self) -> None:
+        self.find(self.HEADING)
         self.click(self.LOGOUT)

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import ElementClickInterceptedException, TimeoutException
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
@@ -45,7 +45,13 @@ class BasePage:
 
     def click(self, locator: Locator) -> None:
         logger.debug("Click %s", locator)
-        self.find_clickable(locator).click()
+        element = self.find_clickable(locator)
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
+        try:
+            element.click()
+        except ElementClickInterceptedException:
+            logger.warning("Native click intercepted for %s; using JavaScript click", locator)
+            self.driver.execute_script("arguments[0].click();", element)
 
     def type(self, locator: Locator, text: str, *, clear: bool = True) -> None:
         element = self.find(locator)

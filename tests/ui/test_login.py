@@ -21,6 +21,7 @@ def test_valid_login_reaches_secure_area(driver, settings) -> None:
 def test_logout_returns_to_login(driver, settings) -> None:
     login_page = LoginPage(driver, settings).open()
     secure = login_page.login(USERS["valid"]["username"], USERS["valid"]["password"])
+    secure.wait_for_url_contains("/secure")
     secure.logout()
     login_page.wait_for_url_contains("/login")
 
