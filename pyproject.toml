@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "selenium-framework"
+version = "1.0.0"
+description = "Production-ready Python + Selenium UI test automation framework"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "learnpython" }]
+dependencies = [
+    "selenium>=4.25.0",
+    "pytest>=8.3.0",
+    "pytest-html>=4.1.0",
+    "pytest-xdist>=3.6.0",
+    "pytest-rerunfailures>=14.0",
+    "pydantic-settings>=2.4.0",
+    "python-dotenv>=1.0.1",
+    "allure-pytest>=2.13.5",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.6.0",
+]
+
+[project.urls]
+Repository = "https://github.com/ravisk363636/learnpython"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--tb=short",
+    "--html=reports/report.html",
+    "--self-contained-html",
+]
+markers = [
+    "smoke: critical path checks that should run on every commit",
+    "regression: broader functional coverage",
+    "login: authentication flows",
+    "forms: form and control interactions",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
